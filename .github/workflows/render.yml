@@ -97,7 +97,7 @@ jobs:
             require("fs").writeFileSync("inputs.txt", inputs.join(" "));
             require("fs").writeFileSync("graph.txt", f);'
           ffmpeg -nostdin -v error -y $(cat inputs.txt) -i assets/sfx/mix_v2.wav \
-            -filter_complex_script graph.txt -map "[v]" -map "[a]" \
+            -/filter_complex graph.txt -map "[v]" -map "[a]" \
             $ENC -r 30 -fps_mode cfr -c:a aac -b:a 256k -t 55 -movflags +faststart "out/$NAME"
           ffmpeg -hide_banner -i "out/$NAME" -af ebur128=peak=true -f null - 2>&1 | grep -E "I:|Peak:" | tail -2
           ffprobe -v error -show_entries format=duration:stream=codec_type,width,height,nb_frames -of compact "out/$NAME"
