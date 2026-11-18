@@ -1,5 +1,6 @@
 name: Render teaser
 # Push = quick 480p preview. Final 4K only via "Run workflow" with quality=final.
+# Every scene renders on its own runner at the same time; a last job stitches them and adds the mix.
 on:
   workflow_dispatch:
     inputs:
@@ -17,69 +18,89 @@ concurrency:
   cancel-in-progress: true
 env:
   QUALITY: ${{ inputs.quality || 'preview' }}
+  HF: hyperframes@0.8.214
 jobs:
-  render:
+  plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    outputs:
+      scenes: ${{ steps.list.outputs.scenes }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: list
+        run: echo "scenes=$(node tools/make-chunk.mjs --list)" >> "$GITHUB_OUTPUT"
+
+  scene:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: true
+      max-parallel: 20
+      matrix:
+        scene: ${{ fromJson(needs.plan.outputs.scenes) }}
+    name: scene ${{ matrix.scene.id }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Static ffmpeg (apt mirror took 17 min)
+      - name: Static ffmpeg
         run: |
           curl -sfL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar xJ -C "$RUNNER_TEMP"
           echo "$(ls -d "$RUNNER_TEMP"/ffmpeg-*-static)" >> "$GITHUB_PATH"
-      - name: Cache baked map
-        id: mapcache
-        uses: actions/cache@v4
-        with:
-          path: assets/map
-          key: map-durban-v1-${{ hashFiles('tools/bake-basemap.mjs') }}
-      - name: Install headless Chrome for the map bake
-        if: steps.mapcache.outputs.cache-hit != 'true'
-        run: |
-          npm i --no-save --no-audit --no-fund puppeteer-core@24
-          npx --yes @puppeteer/browsers install chrome-headless-shell@stable --path "$HOME/.cache/puppeteer" | tail -1
-      - name: Bake satellite map (globe to Durban)
-        if: steps.mapcache.outputs.cache-hit != 'true'
-        env:
-          NAME: durban
-          STYLE: satellite
-          PROJECTION: globe
-          FROM: "20,0"
-          CENTER: "29.8,-31.2"
-          ZSTART: "1.85"
-          ZEND: "7.0"
-          DUR: "5.5"
-          HOLD: "0.6"
-          COUNTRIES: "South Africa:#B08D57"
-          POINTS: "31.03,-29.87;30.3,-31.0;28.95,-32.35;27.8,-33.4"
-          OUT: assets/map
-        run: |
-          node tools/bake-basemap.mjs 2>&1 | tail -5
-          echo "window.__WARATAH_MAP = $(cat assets/map/durban-coords.json);" > assets/map/durban-coords.js
-          ls -la assets/map | tail -5
-      - name: Mix sound-effects bed
-        run: bash tools/mix-sfx.sh
-      - name: Check
-        run: npx --yes hyperframes@0.8.214 check 2>&1 | tail -15
-      - name: Render
+      - name: Keep only this scene
+        run: node tools/make-chunk.mjs "${{ matrix.scene.id }}"
+      - name: Render scene
         run: |
           mkdir -p out
-          if [ "$QUALITY" = final ]; then
-            npx --yes hyperframes@0.8.214 render -o out/raw.mp4 -q delivery --resolution 4k --quiet 2>&1 | tail -20
-          else
-            npx --yes hyperframes@0.8.214 render -o out/raw.mp4 -q draft --quiet 2>&1 | tail -20
-          fi
-      - name: Loudness pass (-14 LUFS, -1 dBTP) and 480p preview scale
+          if [ "$QUALITY" = final ]; then Q="-q delivery --resolution 4k"; else Q="-q draft"; fi
+          npx --yes $HF render -o "out/${{ matrix.scene.id }}.mp4" $Q -w 4 --quiet 2>&1 | tail -15
+          ffprobe -v error -show_entries stream=nb_frames,width,height -of compact "out/${{ matrix.scene.id }}.mp4"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chunk-${{ matrix.scene.id }}
+          path: out/${{ matrix.scene.id }}.mp4
+          compression-level: 0
+          retention-days: 3
+
+  stitch:
+    needs: [plan, scene]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static ffmpeg
         run: |
-          if [ "$QUALITY" = final ]; then VF="-c:v copy"; NAME=waratah_teaser_4k.mp4
-          else VF="-vf scale=-2:480 -c:v libx264 -preset veryfast -crf 26"; NAME=waratah_teaser_preview480.mp4; fi
-          ffmpeg -nostdin -v error -y -i out/raw.mp4 $VF -af loudnorm=I=-14:TP=-1:LRA=11 -ar 48000 -c:a aac -b:a 256k "out/$NAME"
-          rm out/raw.mp4
+          curl -sfL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar xJ -C "$RUNNER_TEMP"
+          echo "$(ls -d "$RUNNER_TEMP"/ffmpeg-*-static)" >> "$GITHUB_PATH"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: chunk-*
+          path: chunks
+          merge-multiple: true
+      - name: Stitch scenes (frame-exact), add mix, loudness pass
+        env:
+          SCENES: ${{ needs.plan.outputs.scenes }}
+        run: |
+          mkdir -p out
+          if [ "$QUALITY" = final ]; then export SCALE="scale=3840:2160"; ENC="-c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p"; NAME=waratah_teaser_4k.mp4
+          else export SCALE="scale=-2:480"; ENC="-c:v libx264 -preset veryfast -crf 26 -pix_fmt yuv420p"; NAME=waratah_teaser_preview480.mp4; fi
+          # Each scene gets exactly round(end*30) - round(start*30) frames, so nothing drifts against the mix.
+          node -e '
+            const s = JSON.parse(process.env.SCENES); let inputs = [], f = "";
+            s.forEach((c, i) => {
+              const n = Math.round((c.start + c.dur) * 30) - Math.round(c.start * 30);
+              inputs.push("-i", `chunks/${c.id}.mp4`);
+              f += `[${i}:v]fps=30,${process.env.SCALE},setsar=1,tpad=stop_mode=clone:stop=30,trim=end_frame=${n},setpts=PTS-STARTPTS[v${i}];`;
+            });
+            f += s.map((_, i) => `[v${i}]`).join("") + `concat=n=${s.length}:v=1:a=0[v];`;
+            f += `[${s.length}:a]loudnorm=I=-14:TP=-1:LRA=11,aresample=48000[a]`;
+            require("fs").writeFileSync("inputs.txt", inputs.join(" "));
+            require("fs").writeFileSync("graph.txt", f);'
+          ffmpeg -nostdin -v error -y $(cat inputs.txt) -i assets/sfx/mix_v2.wav \
+            -filter_complex_script graph.txt -map "[v]" -map "[a]" \
+            $ENC -c:a aac -b:a 256k -t 55 -movflags +faststart "out/$NAME"
           ffmpeg -hide_banner -i "out/$NAME" -af ebur128=peak=true -f null - 2>&1 | grep -E "I:|Peak:" | tail -2
-          ffprobe -v error -show_entries format=duration:stream=codec_type,width,height -of compact "out/$NAME"
+          ffprobe -v error -show_entries format=duration:stream=codec_type,width,height,nb_frames -of compact "out/$NAME"
       - uses: actions/upload-artifact@v4
         with:
           name: waratah-teaser-${{ env.QUALITY }}
