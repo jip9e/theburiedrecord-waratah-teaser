@@ -1,10 +1,22 @@
 name: Render teaser
+# Push = quick 480p preview. Final 4K only via "Run workflow" with quality=final.
 on:
   workflow_dispatch:
+    inputs:
+      quality:
+        description: preview (480p draft) or final (4K delivery)
+        type: choice
+        options: [preview, final]
+        default: preview
   push:
     branches: [main]
 permissions:
   contents: read
+concurrency:
+  group: render-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  QUALITY: ${{ inputs.quality || 'preview' }}
 jobs:
   render:
     runs-on: ubuntu-latest
@@ -14,12 +26,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+      - name: Static ffmpeg (apt mirror took 17 min)
+        run: |
+          curl -sfL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar xJ -C "$RUNNER_TEMP"
+          echo "$(ls -d "$RUNNER_TEMP"/ffmpeg-*-static)" >> "$GITHUB_PATH"
+      - name: Cache baked map
+        id: mapcache
+        uses: actions/cache@v4
+        with:
+          path: assets/map
+          key: map-durban-v1-${{ hashFiles('tools/bake-basemap.mjs') }}
       - name: Install headless Chrome for the map bake
+        if: steps.mapcache.outputs.cache-hit != 'true'
         run: |
           npm i --no-save --no-audit --no-fund puppeteer-core@24
           npx --yes @puppeteer/browsers install chrome-headless-shell@stable --path "$HOME/.cache/puppeteer" | tail -1
       - name: Bake satellite map (globe to Durban)
+        if: steps.mapcache.outputs.cache-hit != 'true'
         env:
           NAME: durban
           STYLE: satellite
@@ -36,25 +59,30 @@ jobs:
         run: |
           node tools/bake-basemap.mjs 2>&1 | tail -5
           echo "window.__WARATAH_MAP = $(cat assets/map/durban-coords.json);" > assets/map/durban-coords.js
-          ls -la assets/map
-      - name: Synthesize sea + drone bed
-        run: |
-          ffmpeg -nostdin -v error -y \
-            -f lavfi -i "anoisesrc=color=brown:amplitude=0.35:duration=27.5:seed=7" \
-            -f lavfi -i "sine=frequency=55:duration=27.5" \
-            -f lavfi -i "sine=frequency=82.4:duration=27.5" \
-            -filter_complex "[0]lowpass=f=600,volume=0.9,tremolo=f=0.12:d=0.6[sea];[1]volume=0.35[a];[2]volume=0.18[b];[sea][a][b]amix=inputs=3:normalize=0,afade=t=in:d=2,afade=t=out:st=24.5:d=3,aformat=channel_layouts=stereo[o]" \
-            -map "[o]" -ar 48000 assets/sfx/bed.wav
+          ls -la assets/map | tail -5
+      - name: Mix sound-effects bed
+        run: bash tools/mix-sfx.sh
       - name: Check
         run: npx --yes hyperframes@0.8.214 check 2>&1 | tail -15
       - name: Render
         run: |
           mkdir -p out
-          npx --yes hyperframes@0.8.214 render -o out/waratah_teaser.mp4 -q delivery --quiet 2>&1 | tail -20
-          ffprobe -v error -show_entries format=duration:stream=codec_type,width,height -of compact out/waratah_teaser.mp4
+          if [ "$QUALITY" = final ]; then
+            npx --yes hyperframes@0.8.214 render -o out/raw.mp4 -q delivery --resolution 4k --quiet 2>&1 | tail -20
+          else
+            npx --yes hyperframes@0.8.214 render -o out/raw.mp4 -q draft --quiet 2>&1 | tail -20
+          fi
+      - name: Loudness pass (-14 LUFS, -1 dBTP) and 480p preview scale
+        run: |
+          if [ "$QUALITY" = final ]; then VF="-c:v copy"; NAME=waratah_teaser_4k.mp4
+          else VF="-vf scale=-2:480 -c:v libx264 -preset veryfast -crf 26"; NAME=waratah_teaser_preview480.mp4; fi
+          ffmpeg -nostdin -v error -y -i out/raw.mp4 $VF -af loudnorm=I=-14:TP=-1:LRA=11 -ar 48000 -c:a aac -b:a 256k "out/$NAME"
+          rm out/raw.mp4
+          ffmpeg -hide_banner -i "out/$NAME" -af ebur128=peak=true -f null - 2>&1 | grep -E "I:|Peak:" | tail -2
+          ffprobe -v error -show_entries format=duration:stream=codec_type,width,height -of compact "out/$NAME"
       - uses: actions/upload-artifact@v4
         with:
-          name: waratah-teaser
-          path: out/waratah_teaser.mp4
+          name: waratah-teaser-${{ env.QUALITY }}
+          path: out/*.mp4
           compression-level: 0
           retention-days: 30
