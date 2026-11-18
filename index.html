@@ -4,33 +4,54 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=1920, height=1080">
 <title>The Waratah: teaser</title>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-<script src="assets/map/durban-coords.js"></script>
+<script src="assets/vendor/gsap.min.js"></script>
 <style>
-@font-face{font-family:"Cinzel";src:url("assets/fonts/Cinzel.ttf")}
-@font-face{font-family:"Cormorant";src:url("assets/fonts/Cormorant.ttf")}
-@font-face{font-family:"Inter";src:url("assets/fonts/Inter.ttf")}
-:root{--ink:#14110F;--parchment:#E8DCC4;--gold:#B08D57;--red:#8A2E24}
-html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#14110F}
-#main{position:relative;width:1920px;height:1080px;overflow:hidden;background:#14110F}
+@font-face {
+  font-family: Cormorant;
+  src: url("assets/fonts/Cormorant.ttf") format("truetype");
+  font-weight: 300 700;
+}
+:root { --title-ink: #e9dfc9; }
+html, body, #main {
+  width: 1920px;
+  height: 1080px;
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+}
+#main { position: relative; }
+#main > .clip:not(audio) { position: absolute; inset: 0; }
+#silence { background: #000; }
 </style>
 </head>
 <body>
-<div id="main" data-composition-id="main" data-start="0" data-duration="27.5" data-width="1920" data-height="1080" data-motion-blur="on" data-motion-blur-shutter="270">
-  <div id="s1" data-composition-id="s1" data-composition-src="compositions/s1-map.html" data-start="0" data-duration="5.5" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
-  <div id="s2" data-composition-id="s2" data-composition-src="compositions/s2-ship.html" data-start="5.5" data-duration="4" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
-  <div id="s3" data-composition-id="s3" data-composition-src="compositions/s3-lamp.html" data-start="9.5" data-duration="3.9" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
-  <div id="s4" data-composition-id="s4" data-composition-src="compositions/s4-rooms.html" data-start="13.4" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
-  <div id="s5" data-composition-id="s5" data-composition-src="compositions/s5-sea.html" data-start="18.4" data-duration="9.1" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
-  <div id="caps" data-composition-id="caps" data-composition-src="compositions/captions.html" data-start="0" data-duration="27.5" data-track-index="2" data-track-kind="captions" data-width="1920" data-height="1080" style="z-index:10"></div>
-  <audio id="vo" class="clip" src="assets/voice/narration.wav" data-start="1" data-duration="23.44" data-track-index="3" data-volume="1"></audio>
-  <audio id="bed" class="clip" src="assets/sfx/bed.wav" data-start="0" data-duration="27.5" data-track-index="4" data-volume="0.55"></audio>
+<div id="main" data-composition-id="main" data-start="0" data-duration="55" data-width="1920" data-height="1080">
+  <div id="opening" class="clip" data-composition-id="opening" data-composition-src="compositions/opening.html"
+    data-start="0" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+  <div id="steamship" class="clip" data-composition-id="steamship" data-composition-src="compositions/steamship.html"
+    data-start="5" data-duration="3.55" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+  <div id="title" class="clip" data-composition-id="title" data-composition-src="compositions/title.html"
+    data-start="8.55" data-duration="7.45" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+  <div id="chart" class="clip" data-composition-id="chart" data-composition-src="compositions/chart.html"
+    data-start="16" data-duration="9" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+  <div id="night" class="clip" data-composition-id="night" data-composition-src="compositions/night.html"
+    data-start="25" data-duration="10.06" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+  <div id="silence" class="clip" data-hold data-start="35.06" data-duration="2.7" data-track-index="1" aria-hidden="true"></div>
+  <div id="storm" class="clip" data-composition-id="storm" data-composition-src="compositions/storm.html"
+    data-start="37.76" data-duration="3.24" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+  <div id="storm-detail" class="clip" data-composition-id="storm-detail" data-composition-src="compositions/storm-detail.html"
+    data-start="41" data-duration="2.45" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+  <div id="newspaper" class="clip" data-composition-id="newspaper" data-composition-src="compositions/newspaper.html"
+    data-start="43.45" data-duration="4.15" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+  <div id="closing" class="clip" data-composition-id="closing" data-composition-src="compositions/closing.html"
+    data-start="47.6" data-duration="7.4" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+  <audio id="mix" class="clip" src="assets/sfx/mix_v2.wav" data-start="0" data-duration="55" data-track-index="3" data-volume="1"></audio>
 </div>
 <script>
 window.__timelines = window.__timelines || {};
-const tl = gsap.timeline({ paused: true });
-tl.set({}, {}, 27.5);
-window.__timelines["main"] = tl;
+const main = gsap.timeline({ paused: true });
+main.set({}, {}, 55);
+window.__timelines.main = main;
 </script>
 </body>
 </html>

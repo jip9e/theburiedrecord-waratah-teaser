@@ -1,0 +1,64 @@
+<template>
+  <div id="root" data-composition-id="chart" data-width="1920" data-height="1080">
+    <style>
+      @font-face { font-family: Cormorant; src: url("assets/fonts/Cormorant.ttf"); font-weight: 300 700; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #d8cbb3; }
+      #chart-sheet { position: absolute; inset: 0; }
+      #chart-scan { position: absolute; left: -242.308px; top: -356.154px; width: 2953.846px; height: auto; }
+      #chart-ink { position: absolute; inset: 0; width: 100%; height: 100%; color: #354748; }
+      #chart-ink text { fill: currentColor; font-family: Cormorant, serif; font-size: 25px; font-weight: 600; }
+      #chart-ink .port-mark { fill: none; stroke: currentColor; stroke-width: 1.8; }
+      #chart-ink #chart-date { font-size: 24px; font-style: italic; font-weight: 500; opacity: 0; }
+      #chart-durban, #chart-cape-town { opacity: 0; }
+    </style>
+    <div id="chart-sheet" data-layout-allow-overflow>
+      <img id="chart-scan" src="assets/archive/admiralty-596.jpg" alt="Admiralty Chart No. 596, southern Africa, 1827" data-layout-allow-overflow data-layout-allow-overlap>
+      <svg id="chart-ink" viewBox="0 0 1248 702" role="img" aria-label="Intended route from Durban to Cape Town">
+        <defs>
+          <!-- Projected manually against the original engraved shoreline and port marks. -->
+          <path id="chart-route-line" pathLength="1000"
+            d="M 1016 238
+               C 1055 260 1040 319 1001 372
+               C 947 447 869 508 777 547
+               C 673 593 583 614 487 634
+               C 412 650 341 667 291 648
+               C 251 632 231 606 222 570
+               C 218 550 222 532 230 518"/>
+          <mask id="chart-route-reveal" x="0" y="0" width="1248" height="702" maskUnits="userSpaceOnUse">
+            <use id="chart-route-draw" href="#chart-route-line" fill="none" stroke="white"
+              stroke-width="13" stroke-dasharray="1000 1000" stroke-dashoffset="1000"/>
+          </mask>
+        </defs>
+        <use href="#chart-route-line" fill="none" stroke="currentColor" stroke-width="3.8"
+          stroke-linecap="round" stroke-dasharray="0.25 8.5" mask="url(#chart-route-reveal)"/>
+        <g id="chart-durban">
+          <circle class="port-mark" cx="1016" cy="238" r="5.5"/>
+          <path class="port-mark" d="M 1022 232 L 1042 211 L 1051 211"/>
+          <text x="1060" y="215">Durban</text>
+        </g>
+        <g id="chart-cape-town">
+          <circle class="port-mark" cx="230" cy="518" r="5.5"/>
+          <path class="port-mark" d="M 225 513 L 207 495 L 199 495"/>
+          <text x="192" y="500" text-anchor="end">Cape Town</text>
+        </g>
+        <text id="chart-date" x="1068" y="540" text-anchor="middle" transform="rotate(-5 1068 540)">26 July 1909</text>
+      </svg>
+    </div>
+    <script>
+      (() => {
+        const timeline = gsap.timeline({ paused: true });
+        timeline.to("#chart-sheet", { scale: 1.021, duration: 9, ease: "none" }, 0);
+        timeline.to("#chart-date", { opacity: 0.82, duration: 0.85, ease: "power1.out" }, 0.36);
+        timeline.to("#chart-durban", { opacity: 1, duration: 0.45, ease: "power1.out" }, 1.91);
+        timeline.to("#chart-route-draw", {
+          attr: { "stroke-dashoffset": 0 },
+          duration: 4.35,
+          ease: "none"
+        }, 2.48);
+        timeline.to("#chart-cape-town", { opacity: 1, duration: 0.55, ease: "power1.out" }, 6.5);
+        window.__timelines = window.__timelines || {};
+        window.__timelines.chart = timeline;
+      })();
+    </script>
+  </div>
+</template>

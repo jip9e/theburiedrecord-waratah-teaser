@@ -18,3 +18,8 @@ All from Pixabay (Pixabay Content License: free for commercial use, no attributi
 - soundreality-atlantic-drone-589644 (uploader: soundreality) https://pixabay.com/sound-effects/search/atlantic-drone/
 - soundreality-thunder-sound-375727 (uploader: soundreality) https://pixabay.com/sound-effects/search/thunder-sound/
 - universfield-thunder-strike-124463 (uploader: universfield) https://pixabay.com/sound-effects/search/thunder-strike/
+
+## Added for mix v2 (teaser rebuild, 2026-11-18)
+- film-special-effects-long-distant-foghorn-40915 (Pixabay): opening foghorn
+- Pixabay library C04 (engine thrum), C11 (Morse telegraph), C12 (night sea), C01 (camera/lamp shutter): see assets/sfx/pixabay/ for the exact file names
+- Score: assets/sfx score_a (see mix-v2.sh)
