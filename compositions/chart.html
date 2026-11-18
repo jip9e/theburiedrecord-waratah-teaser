@@ -9,7 +9,7 @@
       #chart-ink text { fill: currentColor; font-family: Cormorant, serif; font-size: 25px; font-weight: 600; }
       #chart-ink .port-mark { fill: none; stroke: currentColor; stroke-width: 1.8; }
       #chart-ink #chart-date { font-size: 24px; font-style: italic; font-weight: 500; opacity: 0; }
-      #chart-durban, #chart-cape-town { opacity: 0; }
+      #chart-durban, #chart-cape-town, #chart-lastseen { opacity: 0; }
     </style>
     <div id="chart-sheet" data-layout-allow-overflow>
       <img id="chart-scan" src="assets/archive/admiralty-596.jpg" alt="Admiralty Chart No. 596, southern Africa, 1827" data-layout-allow-overflow data-layout-allow-overlap>
@@ -42,7 +42,9 @@
           <text x="192" y="500" text-anchor="end">Cape Town</text>
         </g>
         <text id="chart-date" x="1068" y="540" text-anchor="middle" transform="rotate(-5 1068 540)">26 July 1909</text>
-      </svg>
+        <g id="chart-lastseen"><ellipse cx="985" cy="395" rx="70" ry="45" fill="none" stroke="#8e2a1f" stroke-width="2.5" stroke-dasharray="6 6"/>
+    <text x="985" y="470" text-anchor="middle" fill="#8e2a1f">LAST SEEN · WILD COAST</text></g>
+</svg>
     </div>
     <script>
       (() => {
@@ -56,7 +58,8 @@
           ease: "none"
         }, 2.48);
         timeline.to("#chart-cape-town", { opacity: 1, duration: 0.55, ease: "power1.out" }, 6.5);
-        window.__timelines = window.__timelines || {};
+        timeline.to("#chart-lastseen", { opacity: 1, duration: .6, ease: "sine.out" }, 6.9);
+      window.__timelines = window.__timelines || {};
         window.__timelines.chart = timeline;
       })();
     </script>

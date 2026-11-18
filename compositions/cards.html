@@ -1,0 +1,68 @@
+<template>
+  <style>
+    @font-face { font-family: Cormorant; src: url("assets/fonts/Cormorant.ttf") format("truetype"); font-weight: 300 700; }
+    @font-face { font-family: Inter; src: url("assets/fonts/Inter.ttf") format("truetype"); font-weight: 300 800; }
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    #root .card { position: absolute; inset: 0; }
+    #root .card-in { position: absolute; opacity: 0; padding: 26px 38px; background: rgba(6, 8, 10, .86);
+      border: 1px solid rgba(233, 223, 201, .25); color: #e9dfc9; max-width: 1340px; }
+    #root .head { margin: 0; font: 600 58px/1.08 Cormorant, serif; letter-spacing: .04em; }
+    #root .sub { margin: 12px 0 0; font: 500 26px/1.35 Inter, sans-serif; text-transform: uppercase;
+      letter-spacing: .14em; color: rgba(233, 223, 201, .78); }
+    #root .bl { left: 230px; bottom: 150px; }
+    #root .tl { left: 230px; top: 140px; }
+    #root .bc { left: 50%; bottom: 140px; transform: translateX(-50%); text-align: center; white-space: nowrap; }
+    #root .center { left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; white-space: nowrap;
+      background: none; border: none; }
+    #root .red { color: #d0533f; }
+    #root .stamp { display: inline-block; transform: rotate(-3deg); border: 3px solid #b8402f; color: #d0533f;
+      padding: 6px 18px; font: 700 34px/1 Inter, sans-serif; letter-spacing: .16em; }
+    #root .capt { display: flex; gap: 26px; align-items: center; }
+    #root .capt img { width: 118px; height: 150px; object-fit: cover; border: 1px solid rgba(233, 223, 201, .35); }
+  </style>
+  <div id="root" data-composition-id="cards" data-width="1920" data-height="1080">
+    <div id="c1" class="clip card" data-start="1.6" data-duration="2.9"><div class="card-in bc">
+      <p class="head">92 PASSENGERS · 119 CREW</p></div></div>
+    <div id="c2" class="clip card" data-start="5.2" data-duration="3.2"><div class="card-in bl">
+      <p class="head">SS WARATAH · BLUE ANCHOR LINE</p>
+      <p class="sub">465 ft · 9,339 tons · built 1908 · second voyage</p></div></div>
+    <div id="c3" class="clip card" data-start="17" data-duration="3.6"><div class="card-in tl">
+      <p class="head">DEPARTED DURBAN</p>
+      <p class="sub">26 July 1909 · 8:15 PM · bound for Cape Town</p></div></div>
+    <div id="c4" class="clip card" data-start="20.8" data-duration="4.0"><div class="card-in tl capt">
+      <img src="assets/archive/captain.jpg" alt="">
+      <div><p class="head">CAPT. JOSIAH EDWARD ILBERY</p>
+      <p class="sub red">No wireless aboard</p></div></div></div>
+    <div id="c5" class="clip card" data-start="25.5" data-duration="4.3"><div class="card-in tl">
+      <p class="head">27 JULY 1909 · EARLY MORNING</p>
+      <p class="sub">Clan MacIntyre signals her by lamp</p></div></div>
+    <div id="c6" class="clip card" data-start="30.3" data-duration="4.6"><div class="card-in tl">
+      <div class="stamp">LAST CONFIRMED CONTACT</div>
+      <p class="sub">Her lamp reply · the last contact ever recorded</p></div></div>
+    <div id="c7" class="clip card" data-start="35.1" data-duration="2.6"><div class="card-in center">
+      <p class="head">NO FURTHER SIGNALS RECEIVED</p>
+      <p class="sub">No wireless · no distress call possible</p></div></div>
+    <div id="c8" class="clip card" data-start="37.9" data-duration="3.0"><div class="card-in bl">
+      <p class="head">NIGHT OF 27–28 JULY 1909</p>
+      <p class="sub">A severe gale off the Wild Coast</p></div></div>
+    <div id="c9" class="clip card" data-start="41.1" data-duration="2.3"><div class="card-in bl">
+      <p class="head">HERMES · FORTE · PANDORA</p>
+      <p class="sub">Royal Navy cruisers search ~3 weeks</p></div></div>
+    <div id="c10" class="clip card" data-start="43.6" data-duration="3.9"><div class="card-in bc">
+      <p class="head">1910 · THE FAMILIES FUND THEIR OWN SEARCH</p>
+      <p class="sub">SS Wakefield · 4 months · as far as Kerguelen</p></div></div>
+  </div>
+  <script>
+    (() => {
+      const timeline = gsap.timeline({ paused: true });
+      document.querySelectorAll("#root .card").forEach((card) => {
+        const start = parseFloat(card.dataset.start), dur = parseFloat(card.dataset.duration);
+        const inner = card.querySelector(".card-in");
+        timeline.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: .5, ease: "sine.out" }, start);
+        timeline.to(inner, { opacity: 0, duration: .4, ease: "sine.in" }, start + dur - .45);
+      });
+      window.__timelines = window.__timelines || {};
+      window.__timelines.cards = timeline;
+    })();
+  </script>
+</template>

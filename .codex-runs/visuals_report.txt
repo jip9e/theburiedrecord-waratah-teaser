@@ -1,0 +1,7 @@
+Rebuilt the 55-second Waratah teaser with moving fog and water, an offshore route on an 1827 Admiralty chart, a timed signal lamp, a storm sequence, an authentic 1909 newspaper clipping, and a transparent end-card logo. Removed the burned-in subtitles and modern map.
+
+The full HyperFrames check passed with zero errors. I reviewed all 12 requested frames and confirmed the 36-second frame is pure black. No video was rendered.
+
+The supplied WAV changed during the edit. It measures 52.64 seconds and contains low room tone during the black hold. I left the audio files and mix element untouched and kept the picture on the brief’s timing.
+
+[Visual report and asset licences](/home/knight/Desktop/projects/gta-6/teaser/tools/CODEX_REPORT_VISUALS.md) · [Contact sheet](/home/knight/Desktop/projects/gta-6/teaser/out/visuals-review/contact-sheet.jpg)
