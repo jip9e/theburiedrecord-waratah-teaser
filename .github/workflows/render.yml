@@ -88,8 +88,8 @@ jobs:
           # crossfades in over that tail (xfade offset = its global start), so the mix stays in sync.
           node -e '
             const s = JSON.parse(process.env.SCENES); let inputs = [], f = "";
-            const X = { steamship: ["fade", 1.2], title: ["fade", 1.2], chart: ["fadegrays", 1.2], night: ["fade", 1.2],
-              silence: ["fadeblack", 1.2], storm: ["fade", 0.9], newspaper: ["hblur", 1.0], "storm-detail": ["fade", 1.2], closing: ["fade", 1.2] };
+            const X = { steamship: ["fade", 1.2], title: ["fade", 1.2], chart: ["zoomin", 1.2], night: ["zoomin", 1.2],
+              silence: ["fadeblack", 1.2], storm: ["fade", 0.9], newspaper: ["fadewhite", 0.6], "storm-detail": ["fade", 1.2], closing: ["fade", 1.2] };
             s.forEach((c, i) => {
               const n = Math.round((c.start + c.dur) * 30) - Math.round(c.start * 30) + Math.round((c.tail || 0) * 30);
               inputs.push("-i", `chunks/${c.id}.mp4`);

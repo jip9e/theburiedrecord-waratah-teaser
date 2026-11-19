@@ -54,7 +54,7 @@
         </g>
         <text id="chart-date" x="1068" y="540" text-anchor="middle" transform="rotate(-5 1068 540)">26 July 1909</text>
         <g id="chart-lastseen"><ellipse cx="985" cy="395" rx="70" ry="45" fill="none" stroke="#c4321d" stroke-width="4" stroke-dasharray="6 6"/>
-    <rect x="770" y="442" width="430" height="46" rx="3" fill="#14100c" fill-opacity=".88"/><text x="985" y="475" text-anchor="middle" fill="#F0ECE1" style="font-size:30px;font-weight:700;letter-spacing:.06em">LAST SEEN · WILD COAST</text></g>
+    <rect x="770" y="442" width="430" height="46" rx="3" fill="#14100c" fill-opacity=".88"/><text x="985" y="475" text-anchor="middle" style="fill:#F0ECE1;font-size:30px;font-weight:700;letter-spacing:.06em">LAST SEEN · WILD COAST</text></g>
 </svg>
     </div>
     <div id="chart-dusk"></div>
@@ -62,9 +62,11 @@
       (() => {
         const timeline = gsap.timeline({ paused: true });
         const end = 10.2;
-        timeline.to("#chart-sheet", { scale: 1.10, x: -27, y: -20, duration: 6.2, ease: "none" }, 0);
-        timeline.to("#chart-sheet", { scale: 1.6, x: -748, y: -87, duration: end - 6.2, ease: "power2.inOut" }, 6.2);
-        timeline.fromTo("#chart-dusk", { opacity: 0 }, { opacity: .94, duration: 2.2, ease: "sine.in" }, end - 2.2);
+        timeline.to("#chart-sheet", { scale: 1.10, x: -27, y: -20, duration: 6.2, ease: "sine.inOut" }, 0);
+        // One accelerating push that ends centred on the Wild Coast circle, so the zoom-through cut lands inside it.
+        timeline.to("#chart-sheet", { scale: 2.8, x: -1554, y: -93, duration: 2.8, ease: "power2.in" }, 6.2);
+        timeline.to("#chart-sheet", { scale: 3.6, x: -1998, y: -104, duration: end - 9.0, ease: "none" }, 9.0);
+        timeline.fromTo("#chart-dusk", { opacity: 0 }, { opacity: .45, duration: 2.2, ease: "sine.in" }, end - 2.2);
         timeline.fromTo("#chart-grazing-light", { x: 95, opacity: .05 }, { x: 20, opacity: .36, duration: .54, ease: "sine.out" }, 0);
         timeline.to("#chart-grazing-light", { x: -205, opacity: 0, duration: 1.48, ease: "sine.inOut" }, .54);
         timeline.to("#chart-date", { opacity: 0.82, duration: 0.85, ease: "power1.out" }, 0.36);

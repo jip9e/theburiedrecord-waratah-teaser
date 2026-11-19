@@ -36,8 +36,8 @@ out = out.replace(/main\.set\(\{\}, \{\}, [\d.]+\)/, `main.set({}, {}, ${s.dur})
 // so the stitch crossfades between two moving frames (a zoom-through dissolve, not a slide change).
 const idx = scenes.findIndex(x => x.id === s.id), isComp = /data-composition-src/.test(s.tag);
 let cam = "";
-if (isComp && idx > 0) cam += `main.fromTo("#${s.id}",{scale:1.07,x:24,transformOrigin:"50% 50%"},{scale:1,x:0,duration:1.8,ease:"power2.out"},0);`;
-if (isComp && s0.tail > 0) cam += `main.to("#${s.id}",{scale:1.09,x:-26,transformOrigin:"50% 50%",duration:${(1.3 + s0.tail).toFixed(2)},ease:"power1.in"},${(s0.dur - 1.3).toFixed(2)});`;
+if (isComp && idx > 0) cam += `main.fromTo("#${s.id}",{scale:1.0,x:16,transformOrigin:"50% 50%"},{scale:1.04,x:-8,duration:2.4,ease:"power2.out"},0);`;
+if (isComp && s0.tail > 0) cam += `main.to("#${s.id}",{scale:1.16,x:-44,transformOrigin:"50% 50%",duration:${(1.3 + s0.tail).toFixed(2)},ease:"power2.in"},${(s0.dur - 1.3).toFixed(2)});`;
 out = out.replace(/(main\.set\(\{\}, \{\}, [\d.]+\);)/, `$1 ${cam}`);
 writeFileSync("index.html", out);
 console.log(`chunk ${s.id}: ${s.dur}s`);

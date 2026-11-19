@@ -58,6 +58,12 @@
       timeline.to("#storm-lightning", { opacity: .02, duration: .10, ease: "power2.out" }, 2.19);
       timeline.set("#storm-lightning", { opacity: .12 }, 2.32);
       timeline.to("#storm-lightning", { opacity: 0, duration: .26, ease: "power2.out" }, 2.32);
+      // Lightning build into the white cut to the newspaper.
+      timeline.set("#storm-lightning", { opacity: .22 }, 2.74);
+      timeline.to("#storm-lightning", { opacity: .03, duration: .09, ease: "power2.out" }, 2.74);
+      timeline.set("#storm-lightning", { opacity: .45 }, 2.92);
+      timeline.to("#storm-lightning", { opacity: .1, duration: .08, ease: "power2.out" }, 2.92);
+      timeline.to("#storm-lightning", { opacity: .9, duration: .22, ease: "power2.in" }, 3.02);
 
       const rain = document.querySelector("#storm-rain");
       for (let i = 0; i < 36; i++) {
