@@ -16,6 +16,7 @@
         background: radial-gradient(ellipse 42% 66% at 20% 26%, #fff4cea6, #e3b57149 42%, transparent 87%);
       }
       #chart-durban, #chart-cape-town, #chart-lastseen { opacity: 0; }
+      #chart-dusk { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 60% 52%, #0b1016 0%, #030405 100%); opacity: 0; pointer-events: none; }
     </style>
     <div id="chart-sheet" data-layout-allow-overflow>
       <img id="chart-scan" src="assets/archive/admiralty-596.jpg" alt="Admiralty Chart No. 596, southern Africa, 1827" data-layout-allow-overflow data-layout-allow-overlap>
@@ -53,14 +54,17 @@
         </g>
         <text id="chart-date" x="1068" y="540" text-anchor="middle" transform="rotate(-5 1068 540)">26 July 1909</text>
         <g id="chart-lastseen"><ellipse cx="985" cy="395" rx="70" ry="45" fill="none" stroke="#c4321d" stroke-width="4" stroke-dasharray="6 6"/>
-    <rect x="770" y="442" width="430" height="46" rx="3" fill="#14100c" fill-opacity=".88"/><text x="985" y="475" text-anchor="middle" fill="#ff9a85" style="font-size:30px;font-weight:700;letter-spacing:.06em">LAST SEEN · WILD COAST</text></g>
+    <rect x="770" y="442" width="430" height="46" rx="3" fill="#14100c" fill-opacity=".88"/><text x="985" y="475" text-anchor="middle" fill="#F0ECE1" style="font-size:30px;font-weight:700;letter-spacing:.06em">LAST SEEN · WILD COAST</text></g>
 </svg>
     </div>
+    <div id="chart-dusk"></div>
     <script>
       (() => {
         const timeline = gsap.timeline({ paused: true });
         const end = 10.2;
-        timeline.to("#chart-sheet", { scale: 1.10, x: -27, y: -20, duration: end, ease: "none" }, 0);
+        timeline.to("#chart-sheet", { scale: 1.10, x: -27, y: -20, duration: 6.2, ease: "none" }, 0);
+        timeline.to("#chart-sheet", { scale: 1.6, x: -748, y: -87, duration: end - 6.2, ease: "power2.inOut" }, 6.2);
+        timeline.fromTo("#chart-dusk", { opacity: 0 }, { opacity: .94, duration: 2.2, ease: "sine.in" }, end - 2.2);
         timeline.fromTo("#chart-grazing-light", { x: 95, opacity: .05 }, { x: 20, opacity: .36, duration: .54, ease: "sine.out" }, 0);
         timeline.to("#chart-grazing-light", { x: -205, opacity: 0, duration: 1.48, ease: "sine.inOut" }, .54);
         timeline.to("#chart-date", { opacity: 0.82, duration: 0.85, ease: "power1.out" }, 0.36);

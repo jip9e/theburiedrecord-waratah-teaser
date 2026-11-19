@@ -25,7 +25,7 @@
     #closing-lloyds .sub, #closing-cta .sub { margin: 14px 0 0; color: #ff7a63; font: 600 26px/1.3 Inter, sans-serif; letter-spacing: .16em; }
     #closing-lloyds .tease { margin: 26px 0 0; color: #f2e6cc; font: 500 italic 36px/1.3 Cormorant, serif; letter-spacing: .02em; }
     #closing-lloyds .tease { display: grid; font-size: 46px; }
-    #closing-lloyds .tease span { grid-area: 1 / 1; opacity: 0; justify-self: center; font-style: normal; font-weight: 600; font-size: 64px; padding: 18px 44px; background: rgba(6,8,10,.82); border: 1px solid rgba(233,223,201,.25); }
+    #closing-lloyds .tease span { grid-area: 1 / 1; opacity: 0; justify-self: center; font-style: normal; font-weight: 600; font-size: 60px; text-transform: uppercase; letter-spacing: .07em; color: #f1e8d4; text-shadow: 0 2px 22px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); }
     #closing-lloyds .tease #t3 { color: #ff7a63; font-style: normal; font-weight: 700; }
     #closing-quiet { position: absolute; left: 50%; top: 50%; translate: -50% -50%; text-align: center; opacity: 0; white-space: nowrap; }
     #closing-quiet .head { margin: 0; color: var(--title-ink); font: 600 64px/1.1 Cormorant, serif; letter-spacing: .05em; }
@@ -77,15 +77,14 @@
       timeline.to("#closing-quiet", { opacity: 1, duration: .6, ease: "sine.out" }, .4);
       timeline.to("#closing-quiet", { opacity: 0, duration: .4, ease: "sine.in" }, 2.8);
       timeline.set("#closing-lloyds", { opacity: 1 }, 3.2);
-      timeline.to("#closing-prom", { opacity: 1, duration: .6, ease: "sine.out" }, 3.0);
-      timeline.to("#closing-prom", { scale: 1.12, x: -51, y: -10, duration: 3.4, ease: "none" }, 3.0);
-      timeline.to("#closing-prom", { opacity: 0, duration: .5, ease: "sine.in" }, 5.8);
-      timeline.to("#closing-atsea", { opacity: 1, duration: .6, ease: "sine.out" }, 5.95);
-      timeline.fromTo("#closing-atsea", { rotation: -1.1, scale: 1.035 }, {
-        rotation: 1.05, scale: 1.15, x: -64, y: -8, duration: 3.1, ease: "none"
-      }, 5.95);
-      timeline.to("#closing-atsea", { opacity: 0, duration: .5, ease: "sine.in" }, 8.5);
-      timeline.to("#closing-water", { opacity: 1, duration: 1.0, ease: "sine.inOut" }, 8.5);
+      timeline.to("#closing-prom", { opacity: 1, duration: 1.4, ease: "sine.inOut" }, 2.4);
+      timeline.fromTo("#closing-prom", { scale: 1.22, x: 40, y: 10 }, { scale: 1.06, x: -51, y: -10, duration: 4.4, ease: "power1.out" }, 2.4);
+      timeline.to("#closing-prom", { opacity: 0, duration: 1.2, ease: "sine.inOut" }, 5.7);
+      timeline.to("#closing-atsea", { opacity: 1, duration: 1.2, ease: "sine.inOut" }, 5.6);
+      timeline.fromTo("#closing-atsea", { scale: 1.16, x: 0, y: 0 }, { scale: 1.22, x: -64, y: -8, duration: 3.9, ease: "none" }, 5.6);
+      timeline.fromTo("#closing-atsea", { rotation: -3.5 }, { rotation: 3.5, duration: 1.3, ease: "sine.inOut", yoyo: true, repeat: 2 }, 5.6);
+      timeline.to("#closing-atsea", { opacity: 0, duration: 1.1, ease: "sine.inOut" }, 8.4);
+      timeline.to("#closing-water", { opacity: 1, duration: 1.4, ease: "sine.inOut" }, 8.2);
       timeline.fromTo("#closing-water-camera", { scale: 1.02 }, {
         scale: 1.13, x: -56, y: -10, duration: 7.2, ease: "none"
       }, 8.2);
