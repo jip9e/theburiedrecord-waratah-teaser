@@ -26,10 +26,10 @@
 
     #newspaper-chart-wrap { position: absolute; left: -80px; top: -60px; width: 2080px; height: 1200px; }
     #newspaper-chart { width: 100%; height: 100%; object-fit: cover; }
-    #newspaper-shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, #110e0cb0 0%, #110e0cf2 75%); }
+    #newspaper-shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, #110e0cd8 0%, #110e0cfa 70%); }
     #newspaper-paper { position: absolute; top: 230px; left: 440px; width: 1040px; transform-origin: 50% 50%;
       box-shadow: 0 30px 80px #000c; }
-    #newspaper-stamp { position: absolute; left: 900px; top: 600px; opacity: 0; transform-origin: 50% 50%;
+    #newspaper-stamp { position: absolute; left: 720px; top: 500px; opacity: 0; transform-origin: 50% 50%;
       border: 4px solid #ff6a52; color: #ff7a63; padding: 10px 24px; font: 700 46px/1 Inter, sans-serif; background: #110e0cd9; letter-spacing: .14em; }
     #newspaper-scan {
       position: relative;
@@ -43,10 +43,10 @@
       top: 140px;
       left: 50%;
       transform: translateX(-50%);
-      margin: 0; padding: 8px 30px; background: #0b0908e6; white-space: nowrap;
-      color: #f2e6cc;
-      font: 500 36px/1.2 Cormorant, serif;
-      letter-spacing: 0.08em;
+      margin: 0; padding: 12px 34px; background: #000000f0; white-space: nowrap;
+      border: 2px solid #f2e6cc; color: #ffffff;
+      font: 700 32px/1.2 Inter, sans-serif; text-transform: uppercase;
+      letter-spacing: 0.12em;
       text-align: center;
     }
   </style>
@@ -71,7 +71,7 @@
       timeline.fromTo("#newspaper-paper", { y: 60, rotation: -2.5, opacity: 0 }, { y: 0, rotation: -1, opacity: 1, duration: .8, ease: "power3.out" }, 0);
       timeline.fromTo("#newspaper-paper", { x: 40 }, { x: -40, duration: 2.45, ease: "none" }, 0);
       timeline.fromTo("#newspaper-stamp", { opacity: 0, scale: 1.6, rotation: -8 }, { opacity: .92, scale: 1, rotation: -6, duration: .22, ease: "power4.in" }, .95);
-      timeline.fromTo("#newspaper-edition", { opacity: 0 }, { opacity: 1, duration: .6 }, .3);
+      timeline.fromTo("#newspaper-edition", { opacity: 0 }, { opacity: 1, duration: .3 }, 0);
       window.__timelines = window.__timelines || {};
       window.__timelines.newspaper = timeline;
     })();

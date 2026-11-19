@@ -1,22 +1,49 @@
 <template>
   <style>
-    #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
-    #storm-detail-camera { position: absolute; inset: 0; transform-origin: 62% 48%; }
-    #storm-detail-painting {
-      position: absolute; top: -60px; left: -44px; width: 2008px; height: 1200px;
-      object-fit: cover; object-position: center 53%;
-    }
+    @font-face { font-family: Cormorant; src: url("assets/fonts/Cormorant.ttf") format("truetype"); font-weight: 300 700; }
+    @font-face { font-family: Inter; src: url("assets/fonts/Inter.ttf") format("truetype"); font-weight: 300 800; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0d0b09; }
+    #sd-cam { position: absolute; inset: 0; transform-origin: 30% 40%; }
+    #sd-chart { position: absolute; left: -132px; top: -440px; width: 2304px; height: 1527px; }
+    #sd-shade { position: absolute; inset: 0; background: linear-gradient(180deg, #0d0b09b8 0%, #0d0b0999 45%, #0d0b09e6 100%); }
+    #sd-svg { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+    #sd-title { position: absolute; right: 150px; top: 130px; margin: 0; text-align: right; color: #e9dfc9; opacity: 0;
+      font: 600 64px/1.05 Cormorant, serif; letter-spacing: .05em; }
+    #sd-title span { display: block; margin-top: 10px; font: 600 28px/1.2 Inter, sans-serif; letter-spacing: .16em; color: #ff7a63; }
+    .sd-lab { position: absolute; margin: 0; color: #fff; font: 700 30px/1 Inter, sans-serif; letter-spacing: .14em; opacity: 0;
+      background: #0d0b09d0; padding: 8px 16px; border: 1px solid #e9dfc966; }
+    #sd-cape { left: 210px; top: 300px; }
+    #sd-ker { left: 1440px; top: 560px; }
   </style>
-  <div data-hf-id="hf-j33u" id="root" data-composition-id="storm-detail" data-width="1920" data-height="1080">
-    <div data-hf-id="hf-c4lx" id="storm-detail-camera" data-layout-allow-overflow="">
-      <img data-color-grading="{&quot;preset&quot;:null,&quot;intensity&quot;:1,&quot;adjust&quot;:{&quot;exposure&quot;:-0.15,&quot;contrast&quot;:0.09,&quot;highlights&quot;:-0.07,&quot;shadows&quot;:0,&quot;whites&quot;:0,&quot;blacks&quot;:0,&quot;temperature&quot;:-0.15,&quot;tint&quot;:0,&quot;vibrance&quot;:0,&quot;saturation&quot;:-0.18},&quot;details&quot;:{&quot;vignette&quot;:0.12,&quot;vignetteMidpoint&quot;:0.5,&quot;vignetteRoundness&quot;:0,&quot;vignetteFeather&quot;:0.65,&quot;grain&quot;:0,&quot;grainSize&quot;:0.25,&quot;grainRoughness&quot;:0.5},&quot;effects&quot;:{&quot;blur&quot;:0,&quot;pixelate&quot;:0,&quot;chromaBleed&quot;:0,&quot;tapeDamage&quot;:0,&quot;tapeTracking&quot;:0,&quot;tapeNoise&quot;:1,&quot;tapeSpeed&quot;:0.5,&quot;filmArtifacts&quot;:0,&quot;halftone&quot;:0,&quot;halftoneSize&quot;:0,&quot;twoInkPrint&quot;:0,&quot;twoInkPrintSize&quot;:0,&quot;ascii&quot;:0,&quot;asciiSize&quot;:0.06578947368421052,&quot;asciiInvert&quot;:0,&quot;asciiStyle&quot;:0,&quot;asciiColor&quot;:1,&quot;asciiRotation&quot;:0,&quot;dither&quot;:0,&quot;ditherSize&quot;:0,&quot;bloom&quot;:0,&quot;bloomRadius&quot;:8,&quot;monoScreen&quot;:0,&quot;monoScreenSize&quot;:0,&quot;monoScreenAngle&quot;:0,&quot;monoScreenSpread&quot;:0,&quot;monoScreenShape&quot;:0,&quot;monoScreenInvert&quot;:0,&quot;scanlines&quot;:0,&quot;scanlineCount&quot;:0,&quot;scanlineSoftness&quot;:0,&quot;chromaticAberration&quot;:0,&quot;chromaticAngle&quot;:0,&quot;crtCurvature&quot;:0,&quot;digitalGlitch&quot;:0,&quot;digitalGlitchColorSplit&quot;:0,&quot;digitalGlitchLineTear&quot;:0,&quot;digitalGlitchPixelate&quot;:0,&quot;digitalGlitchBlockAmount&quot;:0,&quot;digitalGlitchBlockDisplacement&quot;:0,&quot;digitalGlitchBlockOpacity&quot;:0,&quot;digitalGlitchSpeed&quot;:0,&quot;engraving&quot;:0,&quot;engravingSpacing&quot;:0.4117647058823529,&quot;engravingMinThickness&quot;:0.2,&quot;engravingMaxThickness&quot;:0.4571428571428572,&quot;engravingAngle&quot;:0.25,&quot;engravingContrast&quot;:0.4666666666666667,&quot;engravingSharpness&quot;:0.59,&quot;engravingWave&quot;:0.2,&quot;engravingWaveFrequency&quot;:0.2222222222222222,&quot;crosshatch&quot;:0,&quot;crosshatchSpacing&quot;:0.28,&quot;crosshatchThickness&quot;:0.25,&quot;crosshatchAngle&quot;:0.25,&quot;crosshatchContrast&quot;:0.3333333333333333,&quot;crosshatchEdges&quot;:0.5,&quot;crosshatchLineWeight&quot;:0,&quot;crosshatchWave&quot;:0.33,&quot;crosshatchWaveFrequency&quot;:0.2222222222222222,&quot;kuwahara&quot;:0,&quot;kuwaharaRadius&quot;:0.14285714285714285,&quot;kuwaharaSharpness&quot;:0.3125,&quot;kuwaharaSaturation&quot;:0.5},&quot;lut&quot;:null,&quot;colorSpace&quot;:&quot;rec709&quot;}" data-hf-id="hf-bsr1" id="storm-detail-painting" src="assets/archive/postcard.jpg" alt="Closer view of the Waratah's bridge and funnel">
+  <div id="root" data-composition-id="storm-detail" data-width="1920" data-height="1080">
+    <div id="sd-plate" class="clip" data-start="0" data-duration="4.15" data-layout-allow-overlap="">
+      <div id="sd-cam" data-layout-allow-overflow="">
+        <img id="sd-chart" src="assets/archive/admiralty-596.jpg" alt="">
+        <div id="sd-shade"></div>
+      </div>
+      <svg id="sd-svg" viewBox="0 0 1920 1080">
+        <circle id="sd-cape-dot" cx="300" cy="380" r="10" fill="#e9dfc9" opacity="0"/>
+        <path id="sd-track" d="M300 380 L520 440 L480 510 L760 540 L720 610 L1020 600 L990 660 L1300 630 L1420 610"
+          fill="none" stroke="#ff6a52" stroke-width="5" stroke-linejoin="round"/>
+        <path id="sd-arrow" d="M1404 592 L1440 610 L1404 628" fill="none" stroke="#ff6a52" stroke-width="5" opacity="0"/>
+      </svg>
+      <p class="sd-lab" id="sd-cape">CAPE TOWN</p>
+      <p class="sd-lab" id="sd-ker">KERGUELEN →</p>
+      <h2 id="sd-title">SS WAKEFIELD · 1910<span>NOTHING FOUND</span></h2>
     </div>
   </div>
   <script>
     (() => {
       const timeline = gsap.timeline({ paused: true });
-      timeline.fromTo("#storm-detail-camera", { scale: 1.34, x: -116, y: 13 },
-        { scale: 1.44, x: -128, y: 2, duration: 4.15, ease: "power1.out" }, 0);
+      const track = document.querySelector("#sd-track");
+      const len = 1900;
+      timeline.fromTo("#sd-cam", { scale: 1.06 }, { scale: 1.0, duration: 4.15, ease: "sine.out" }, 0);
+      timeline.to("#sd-cape-dot", { opacity: 1, duration: .3 }, .1);
+      timeline.to("#sd-cape", { opacity: 1, duration: .35 }, .15);
+      timeline.fromTo(track, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 2.6, ease: "power1.inOut" }, .3);
+      timeline.to("#sd-arrow", { opacity: 1, duration: .2 }, 2.85);
+      timeline.to("#sd-ker", { opacity: 1, duration: .35 }, 2.8);
+      timeline.to("#sd-title", { opacity: 1, duration: .5, ease: "sine.out" }, .2);
       window.__timelines = window.__timelines || {};
       window.__timelines["storm-detail"] = timeline;
     })();
