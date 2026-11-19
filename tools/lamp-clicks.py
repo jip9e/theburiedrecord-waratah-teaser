@@ -1,7 +1,7 @@
 # Build assets/sfx/lamp_clicks.wav: one shutter click at every lamp on/off from tools/morse.mjs.
 # "far" = Clan MacIntyre's lamp (distant, dull, very quiet); "near" = Waratah's shutter (quiet, roomy).
 import subprocess, numpy as np, wave
-SR = 48000; D = 55
+SR = 48000; D = 63
 raw = subprocess.check_output(["ffmpeg", "-nostdin", "-v", "error", "-i", "assets/sfx/pixabay/new/clack_85854.mp3",
   "-af", "atrim=0.075:0.25,afade=t=out:st=0.14:d=0.035", "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"])
 click = np.frombuffer(raw, np.float32); click = click / np.abs(click).max()
