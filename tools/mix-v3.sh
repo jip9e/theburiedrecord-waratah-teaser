@@ -20,34 +20,35 @@ ffmpeg -nostdin -v error -y -i assets/voice/v2/narration_v2.wav -filter_complex 
 ffmpeg -nostdin -v error -y -i assets/music/v2/score_a.mp3 -filter_complex "
  [0]aformat=sample_rates=48000:channel_layouts=stereo,asplit=3[m1][m2][m3];
  [m1]atrim=0:30.4,afade=t=in:d=2,afade=t=out:st=29.4:d=1.0[A];
- [m3]atrim=1:6.2,asetpts=N/SR/TB,lowpass=f=900,afade=t=in:d=0.6,afade=t=out:st=4.2:d=0.9,adelay=29900:all=1,volume=0.7[dr];
+ [m3]atrim=1:6.2,asetpts=N/SR/TB,lowpass=f=900,afade=t=in:d=0.6,afade=t=out:st=4.95:d=0.15,adelay=29900:all=1,volume=1.1[dr];
  [m2]atrim=40:57.5,asetpts=N/SR/TB,afade=t=in:d=2.0,afade=t=out:st=13.2:d=4,adelay=37800:all=1[B];
  [A][dr][B]amix=inputs=3:normalize=0,apad=whole_dur=$D,atrim=0:$D,
- highpass=f=90:poles=2,equalizer=f=250:t=o:w=1.2:g=-4,equalizer=f=2500:t=o:w=1.5:g=-5,
+ highpass=f=85:poles=2,equalizer=f=260:t=o:w=1.2:g=-5.5,equalizer=f=150:t=o:w=1:g=-2,equalizer=f=2500:t=o:w=1.5:g=-5,
  acompressor=threshold=0.05:ratio=6:attack=80:release=900:makeup=2,
- loudnorm=I=$MUS_I:TP=-6:LRA=5,volume='1-0.3*clip((t-38.5)/0.5,0,1)*clip((47.7-t)/0.5,0,1)-0.3*clip((t-47.5)/0.4,0,1)*clip((51.2-t)/0.4,0,1)':eval=frame,aresample=48000[o]" -map "[o]" -c:a pcm_s16le "$T/music.wav"
+ loudnorm=I=$MUS_I:TP=-6:LRA=5,volume='(1-0.4*clip((t-38.8)/0.4,0,1)*clip((47.4-t)/0.4,0,1)-0.3*clip((t-47.4)/0.4,0,1)*clip((51.1-t)/0.4,0,1))*(1+0.41*clip((t-51.1)/0.8,0,1))':eval=frame,aresample=48000[o]" -map "[o]" -c:a pcm_s16le "$T/music.wav"
 
 # 3) SFX stem: one effect per story beat.
 ffmpeg -nostdin -v error -y \
  -i $N/foghorn_long_distant_40915.mp3 -i $N/sea_at_night_17353.mp3 -i $N/engine_room_hum_584775.mp3 \
  -i $P/alexis_gaming_cam-cinematic-bass-boom-free-370400.mp3 -i $N/morse_code_131798.mp3 -i $N/camera_shutter_187326.mp3 \
  -i $P/chrysalyn-immersive-ocean-storm-ambience-with-roaring-waves-and-wind-562429.mp3 \
- -i $P/dragon-studio-groaning-metal-511322.mp3 -i $P/dragon-studio-cinematic-boom-01-414572.mp3 -i $P/universfield-thunder-strike-124463.mp3 \
+ -i $P/dragon-studio-groaning-metal-511322.mp3 -i $P/dragon-studio-cinematic-boom-01-414572.mp3 -i $P/universfield-thunder-strike-124463.mp3 -i $N/steam_engine_loop_43171.mp3 \
  -filter_complex "
  [0]atrim=0.5,asetpts=N/SR/TB,afade=t=out:st=6.5:d=1.3,equalizer=f=200:t=o:w=1:g=-2.5,volume=1.4[horn];
- [1]atrim=2:18,asetpts=N/SR/TB,lowpass=f=3000,afade=t=in:d=1.0,afade=t=out:st=12:d=4,volume=2.0[sea];
+ [1]atrim=2:18,asetpts=N/SR/TB,lowpass=f=3000,afade=t=in:d=0.6,afade=t=out:st=12:d=4,volume=2.8[sea];
  [2]atrim=2:11,asetpts=N/SR/TB,lowpass=f=1200,afade=t=in:d=0.8,afade=t=out:st=5.5:d=3,adelay=4800:all=1,volume=1.3[eng];
  [3]atrim=0:6,afade=t=out:st=4:d=2,adelay=8550:all=1,volume=0.7[drop];
- [4]highpass=f=500,lowpass=f=1600,aecho=0.6:0.4:40:0.2,adelay=23900:all=1,volume=2.0[morse];
- [5]atrim=0:0.15,highpass=f=300,highshelf=f=5000:g=-3,aecho=0.8:0.6:60|110|180:0.35|0.25|0.15,asplit=2[k1][k2];
- [k1]adelay=29560:all=1,volume=0.22[s1];[k2]adelay=29980:all=1,volume=0.19[s2];
- [6]atrim=0:16,afade=t=in:d=0.3,afade=t=out:st=5.5:d=4.2,adelay=37750:all=1,lowpass=f=4500,volume=0.17[storm];
+ [4]highpass=f=700,lowpass=f=3500,aecho=0.6:0.4:40:0.2,adelay=23900:all=1,volume=2.8[morse];
+ [5]atrim=0:0.15,highpass=f=300,lowpass=f=6000,highshelf=f=4500:g=-5,aecho=0.8:0.7:70|130|210:0.45|0.32|0.2,asplit=2[k1][k2];
+ [k1]adelay=29250:all=1,volume=0.12[s1];[k2]adelay=29650:all=1,volume=0.10[s2];
+ [6]atrim=0:16,afade=t=in:d=0.3,afade=t=out:st=5.0:d=4.6,adelay=37750:all=1,lowpass=f=4500,volume=0.17[storm];
  [7]atrim=0:1.4,afade=t=out:st=0.9:d=0.5,adelay=40250:all=1,volume=0.7[metal];
  [8]adelay=37750:all=1,volume=0.5[boom];
- [9]atrim=0:7,afade=t=out:st=4:d=3,adelay=38200:all=1,volume=0.3[thun];
- [horn][sea][eng][drop][morse][s1][s2][storm][metal][boom][thun]amix=inputs=11:normalize=0,
+ [9]atrim=0:5,afade=t=out:st=2.5:d=2.5,adelay=38200:all=1,volume=0.25[thun];
+ [10]atrim=0:4,asetpts=N/SR/TB,highpass=f=100,lowpass=f=2500,equalizer=f=250:t=o:w=1:g=3,afade=t=in:d=0.4,afade=t=out:st=2.4:d=1.0,adelay=4900:all=1,volume=1.2[chug];
+ [horn][sea][eng][drop][morse][s1][s2][storm][metal][boom][thun][chug]amix=inputs=12:normalize=0,
  apad=whole_dur=$D,atrim=0:$D,equalizer=f=3000:t=o:w=1.4:g=-4,
- loudnorm=I=$SFX_I:TP=-3:LRA=15,aresample=48000[o]" -map "[o]" -c:a pcm_s16le "$T/sfx.wav"
+ loudnorm=I=$SFX_I:TP=-3:LRA=15,volume='(1-0.5*clip((t-38.8)/0.3,0,1)*clip((47.2-t)/0.3,0,1))*(1-0.55*clip((t-43.8)/0.1,0,1)*clip((45.0-t)/0.2,0,1))':eval=frame,aresample=48000[o]" -map "[o]" -c:a pcm_s16le "$T/sfx.wav"
 
 # 4) Sum: music and SFX gently duck (about 3 dB) only while the voice speaks, so the bed still feels steady.
 ffmpeg -nostdin -v error -y -i "$T/vo.wav" -i "$T/music.wav" -i "$T/sfx.wav" -filter_complex "
