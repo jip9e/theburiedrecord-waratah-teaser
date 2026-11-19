@@ -5,7 +5,7 @@ const html = readFileSync("index.html", "utf8");
 const hostRe = /<div id="([\w-]+)" class="clip"[^>]*?data-start="([\d.]+)" data-duration="([\d.]+)"[^>]*><\/div>/gs;
 const all = [...html.matchAll(hostRe)].map(m => ({ id: m[1], start: +m[2], dur: +m[3], tag: m[0] }));
 const cardsHost = all.find(x => x.id === "cards");
-const scenes = all.filter(x => x.id !== "cards");
+const scenes = all.filter(x => x.id !== "cards").sort((a, b) => a.start - b.start);
 const arg = process.argv[2];
 if (arg === "--list") { console.log(JSON.stringify(scenes.map(({ id, start, dur }) => ({ id, start, dur })))); process.exit(0); }
 const s = scenes.find(x => x.id === arg);
