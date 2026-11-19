@@ -84,15 +84,24 @@ jobs:
           mkdir -p out
           if [ "$QUALITY" = final ]; then export SCALE="scale=3840:2160"; ENC="-c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p"; NAME=waratah_teaser_4k.mp4
           else export SCALE="scale=-2:480"; ENC="-c:v libx264 -preset veryfast -crf 26 -pix_fmt yuv420p"; NAME=waratah_teaser_preview480.mp4; fi
-          # Each scene gets exactly round(end*30) - round(start*30) frames, so nothing drifts against the mix.
+          # Each scene starts on exactly round(start*30) and renders a tail past its cut; the next scene
+          # crossfades in over that tail (xfade offset = its global start), so the mix stays in sync.
           node -e '
             const s = JSON.parse(process.env.SCENES); let inputs = [], f = "";
+            const X = { steamship: ["fade", 1.0], title: ["zoomin", 1.0], chart: ["fadeblack", 1.2], night: ["zoomin", 0.9],
+              silence: ["fadeblack", 0.7], storm: ["fadewhite", 0.25], newspaper: ["zoomin", 0.6], "storm-detail": ["smoothleft", 0.8], closing: ["fadeblack", 1.2] };
             s.forEach((c, i) => {
-              const n = Math.round((c.start + c.dur) * 30) - Math.round(c.start * 30);
+              const n = Math.round((c.start + c.dur) * 30) - Math.round(c.start * 30) + Math.round((c.tail || 0) * 30);
               inputs.push("-i", `chunks/${c.id}.mp4`);
-              f += `[${i}:v]fps=30,${process.env.SCALE},setsar=1,tpad=stop_mode=clone:stop=30,trim=end_frame=${n},setpts=PTS-STARTPTS[v${i}];`;
+              f += `[${i}:v]fps=30,${process.env.SCALE},setsar=1,format=yuv420p,tpad=stop_mode=clone:stop=60,trim=end_frame=${n},setpts=PTS-STARTPTS[v${i}];`;
             });
-            f += s.map((_, i) => `[v${i}]`).join("") + `concat=n=${s.length}:v=1:a=0[v];`;
+            let acc = "v0";
+            s.slice(1).forEach((c, k) => {
+              const i = k + 1, [t, d0] = X[c.id] || ["fade", 0.8], d = Math.min(d0, s[i - 1].tail || 0.04);
+              const off = (Math.round(c.start * 30) / 30).toFixed(4), out = i === s.length - 1 ? "v" : `x${i}`;
+              f += `[${acc}][v${i}]xfade=transition=${t}:duration=${d}:offset=${off}[${out}];`;
+              acc = out;
+            });
             f += `[${s.length}:a]loudnorm=I=-14:TP=-1:LRA=11,aresample=48000[a]`;
             require("fs").writeFileSync("inputs.txt", inputs.join(" "));
             require("fs").writeFileSync("graph.txt", f);'

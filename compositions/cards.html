@@ -4,45 +4,49 @@
     @font-face { font-family: Inter; src: url("assets/fonts/Inter.ttf") format("truetype"); font-weight: 300 800; }
     #root { position: absolute; inset: 0; pointer-events: none; }
     #root .card { position: absolute; inset: 0; }
-    #root .card-in { position: absolute; opacity: 0; padding: 26px 38px; background: rgba(6, 8, 10, .86);
-      border: 1px solid rgba(233, 223, 201, .25); color: #e9dfc9; max-width: 1340px; }
-    #root .head { margin: 0; font: 600 58px/1.08 Cormorant, serif; letter-spacing: .04em; }
-    #root .sub { margin: 12px 0 0; font: 500 31px/1.35 Inter, sans-serif; text-transform: uppercase;
-      letter-spacing: .14em; color: rgba(233, 223, 201, .78); }
-    #root .bl { left: 230px; bottom: 150px; }
-    #root .tl { left: 230px; top: 140px; }
-    #root .bc { left: 50%; bottom: 140px; transform: translateX(-50%); text-align: center; white-space: nowrap; }
-    #root .center { left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; white-space: nowrap;
-      background: none; border: none; }
-    #root .red { color: #ff7a63; }
-    #root .stamp { display: inline-block; transform: rotate(-3deg); border: 3px solid #ff6a52; color: #ff7a63; background: rgba(6,8,10,.6);
-      padding: 6px 18px; font: 700 34px/1 Inter, sans-serif; letter-spacing: .16em; }
-    #root .capt { display: flex; gap: 26px; align-items: center; }
-    #root .capt img { width: 118px; height: 150px; object-fit: cover; border: 1px solid rgba(233, 223, 201, .35); }
+    /* Soft edge scrim instead of a boxed plate: darkens only the side of frame the type sits on. */
+    #root .scrim { position: absolute; inset: 0; opacity: 0; }
+    #root .scrim.s-bl { background: radial-gradient(ellipse 75% 60% at 18% 88%, rgba(3,4,6,.82) 0%, rgba(3,4,6,.45) 45%, rgba(3,4,6,0) 75%); }
+    #root .scrim.s-tl { background: radial-gradient(ellipse 75% 60% at 18% 14%, rgba(3,4,6,.82) 0%, rgba(3,4,6,.45) 45%, rgba(3,4,6,0) 75%); }
+    #root .scrim.s-bc { background: linear-gradient(0deg, rgba(3,4,6,.85) 0%, rgba(3,4,6,.5) 26%, rgba(3,4,6,0) 48%); }
+    #root .card-in { position: absolute; color: #f1e8d4; max-width: 1400px; }
+    #root .head { margin: 0; transform-origin: 0 50%; font: 600 62px/1.06 Cormorant, serif; letter-spacing: .05em; opacity: 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.9); }
+    #root .rule { height: 2px; width: 0; margin: 16px 0 14px; background: linear-gradient(90deg, #e3b062, rgba(227,176,98,0)); }
+    #root .bc .rule { margin-left: auto; margin-right: auto; background: linear-gradient(90deg, rgba(227,176,98,0), #e3b062, rgba(227,176,98,0)); }
+    #root .sub { margin: 0; font: 500 29px/1.35 Inter, sans-serif; text-transform: uppercase; opacity: 0;
+      letter-spacing: .16em; color: rgba(241, 232, 212, .86); text-shadow: 0 2px 12px rgba(0,0,0,.9); }
+    #root .bl { left: 200px; bottom: 140px; }
+    #root .tl { left: 200px; top: 130px; }
+    #root .bc .head, #root .center .head { transform-origin: 50% 50%; }
+    #root .bc { left: 0; right: 0; bottom: 120px; margin: 0 auto; text-align: center; white-space: nowrap; }
+    #root .center { left: 0; right: 0; top: 440px; margin: 0 auto; text-align: center; white-space: nowrap; }
+    #root .stamp { display: inline-block; border: 3px solid #ff7a63; color: #ff8a73; opacity: 0;
+      padding: 8px 20px; font: 700 34px/1 Inter, sans-serif; letter-spacing: .18em; text-shadow: 0 2px 10px rgba(0,0,0,.8); }
   </style>
   <div id="root" data-composition-id="cards" data-width="1920" data-height="1080">
-    <div id="c1" class="clip card" data-start="1.6" data-duration="2.9"><div class="card-in bc">
-      <p class="head">92 PASSENGERS · 119 CREW</p></div></div>
-    <div id="c2" class="clip card" data-start="5.2" data-duration="3.2"><div class="card-in bl">
-      <p class="head">SS WARATAH · BLUE ANCHOR LINE</p>
+    <div id="c1" class="clip card" data-start="1.6" data-duration="2.9"><div class="scrim s-bc"></div><div class="card-in bc">
+      <p class="head">92 PASSENGERS · 119 CREW</p><div class="rule"></div></div></div>
+    <div id="c2" class="clip card" data-start="5.2" data-duration="3.2"><div class="scrim s-bl"></div><div class="card-in bl">
+      <p class="head">SS WARATAH · BLUE ANCHOR LINE</p><div class="rule"></div>
       <p class="sub">Brand new · only her second voyage</p></div></div>
-    <div id="c3" class="clip card" data-start="17" data-duration="4.6"><div class="card-in tl">
-      <p class="head">DEPARTED DURBAN</p>
+    <div id="c3" class="clip card" data-start="17" data-duration="4.6"><div class="scrim s-tl"></div><div class="card-in tl">
+      <p class="head">DEPARTED DURBAN</p><div class="rule"></div>
       <p class="sub">26 July 1909 · 8:15 PM · bound for Cape Town</p></div></div>
-    <div id="c5" class="clip card" data-start="25.5" data-duration="4.3"><div class="card-in tl">
-      <p class="head">27 JULY 1909 · EARLY MORNING</p>
+    <div id="c5" class="clip card" data-start="25.5" data-duration="4.1"><div class="scrim s-tl"></div><div class="card-in tl">
+      <p class="head">27 JULY 1909 · EARLY MORNING</p><div class="rule"></div>
       <p class="sub">Clan MacIntyre signals her by lamp</p></div></div>
-    <div id="c6" class="clip card" data-start="30.3" data-duration="4.6"><div class="card-in tl">
-      <div class="stamp">LAST CONFIRMED CONTACT</div>
+    <div id="c6" class="clip card" data-start="30.3" data-duration="4.6"><div class="scrim s-tl"></div><div class="card-in tl">
+      <div class="stamp">LAST CONFIRMED CONTACT</div><div class="rule"></div>
       <p class="sub">Waratah · 27 July 1909</p></div></div>
     <div id="c7" class="clip card" data-start="35.1" data-duration="2.6"><div class="card-in center">
-      <p class="head">NO FURTHER SIGNALS RECEIVED</p>
+      <p class="head">NO FURTHER SIGNALS RECEIVED</p><div class="rule"></div>
       <p class="sub">No wireless · no distress call possible</p></div></div>
-    <div id="c8" class="clip card" data-start="37.9" data-duration="3.0"><div class="card-in bl">
-      <p class="head">NIGHT OF 27–28 JULY 1909</p>
+    <div id="c8" class="clip card" data-start="37.9" data-duration="3.0"><div class="scrim s-bl"></div><div class="card-in bl">
+      <p class="head">NIGHT OF 27–28 JULY 1909</p><div class="rule"></div>
       <p class="sub">A severe gale off the Wild Coast</p></div></div>
-    <div id="c10" class="clip card" data-start="43.6" data-duration="3.9"><div class="card-in bc">
-      <p class="head">1910 · THE FAMILIES FUND THEIR OWN SEARCH</p>
+    <div id="c10" class="clip card" data-start="43.6" data-duration="3.9"><div class="scrim s-bc"></div><div class="card-in bc">
+      <p class="head">1910 · THE FAMILIES FUND THEIR OWN SEARCH</p><div class="rule"></div>
       <p class="sub">SS Wakefield · 4 months · as far as Kerguelen</p></div></div>
   </div>
   <script>
@@ -50,9 +54,22 @@
       const timeline = gsap.timeline({ paused: true });
       document.querySelectorAll("#root .card").forEach((card) => {
         const start = parseFloat(card.dataset.start), dur = parseFloat(card.dataset.duration);
+        const end = start + dur - .5;
+        const scrim = card.querySelector(".scrim"), head = card.querySelector(".head, .stamp");
+        const rule = card.querySelector(".rule"), sub = card.querySelector(".sub");
         const inner = card.querySelector(".card-in");
-        timeline.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: .5, ease: "sine.out" }, start);
-        timeline.to(inner, { opacity: 0, duration: .4, ease: "sine.in" }, start + dur - .45);
+        if (scrim) timeline.fromTo(scrim, { opacity: 0 }, { opacity: 1, duration: .7, ease: "sine.out" }, start - .1);
+        // Headline: tracking closes in while it rises and fades up.
+        timeline.fromTo(head, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 1.1, ease: "power3.out" }, start);
+        if (!head.classList.contains("stamp")) timeline.fromTo(head, { scale: 1.06 }, { scale: 1, duration: 1.6, ease: "power2.out" }, start);
+        if (head.classList.contains("stamp")) timeline.fromTo(head, { scale: 1.35, rotation: 0 }, { scale: 1, rotation: -3, duration: .35, ease: "back.out(2)" }, start);
+        timeline.fromTo(rule, { width: 0 }, { width: card.querySelector(".bc, .center") ? 520 : 360, duration: .9, ease: "power2.inOut" }, start + .3);
+        if (sub) timeline.fromTo(sub, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: .8, ease: "power2.out" }, start + .45);
+        // Slow drift for the whole hold so the type is never static.
+        timeline.fromTo(inner, { x: 0 }, { x: 10, duration: dur, ease: "none" }, start);
+        // Exit: everything lifts and fades together.
+        timeline.to([head, sub, rule].filter(Boolean), { opacity: 0, y: -10, duration: .45, ease: "sine.in", stagger: .04 }, end);
+        if (scrim) timeline.to(scrim, { opacity: 0, duration: .5, ease: "sine.in" }, end + .05);
       });
       window.__timelines = window.__timelines || {};
       window.__timelines.cards = timeline;

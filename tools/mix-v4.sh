@@ -48,16 +48,18 @@ ffmpeg -nostdin -v error -y \
  [d4]atrim=0:2.5,lowpass=f=150,afade=t=out:st=0.3:d=2,adelay=50500:all=1,volume=0.22[th1];
  [d5]atrim=0:2.5,lowpass=f=150,afade=t=out:st=0.3:d=2,adelay=53550:all=1,volume=0.22[th2];
  [d6]atrim=0:4,lowpass=f=170,afade=t=out:st=0.6:d=3,adelay=56450:all=1,volume=0.55[th3];
- [d7]anullsink;
+ [d7]atrim=0:2.5,areverse,highpass=f=60,afade=t=in:d=1.6,afade=t=out:st=2.35:d=0.15,adelay=53950:all=1,volume=0.4[rise];
  [d1]atrim=0:4,lowpass=f=140,afade=t=in:d=0.05,afade=t=out:st=0.4:d=2.0,adelay=34950:all=1,volume=0.45[tail];
  [d2]atrim=0:4,lowpass=f=200,afade=t=out:st=1.2:d=2.0,adelay=37720:all=1,volume=0.9[sub];
- [6]atrim=0:16,afade=t=in:d=0.3,afade=t=out:st=8.0:d=2.2,adelay=37750:all=1,lowpass=f=4500,volume='0.3*(1+0.6*clip((38.9-t)/0.6,0,1))*(1-0.5*clip((t-40.6)/1.4,0,1))*(1+0.7*clip((t-43.2)/0.7,0,1))':eval=frame[storm];
+ [6]asplit=2[s6a][s6b];
+ [s6b]atrim=20:22,asetpts=N/SR/TB,lowpass=f=700,afade=t=in:d=1.0,afade=t=out:st=1.0:d=0.2,adelay=36550:all=1,volume=0.32[pre];
+ [s6a]atrim=0:16,afade=t=in:d=0.3,afade=t=out:st=8.0:d=2.2,adelay=37750:all=1,lowpass=f=4500,volume='0.3*(1+0.6*clip((38.9-t)/0.6,0,1))*(1-0.5*clip((t-40.6)/1.4,0,1))*(1+0.7*clip((t-43.2)/0.7,0,1))':eval=frame[storm];
  [7]atrim=0:1.4,afade=t=out:st=0.9:d=0.5,adelay=40250:all=1,volume=0.7[metal];
  [8]adelay=37750:all=1,volume=0.85[boom];
  [9]atrim=0:5,afade=t=out:st=2.5:d=2.5,adelay=38050:all=1,volume=0.42[thun];
  [11]atrim=0:0.5,lowpass=f=1800,afade=t=out:st=0.15:d=0.3,adelay=41050:all=1,volume=0.5[paper];
  [10]atrim=0:4,asetpts=N/SR/TB,highpass=f=100,lowpass=f=2500,equalizer=f=250:t=o:w=1:g=3,afade=t=in:d=0.4,afade=t=out:st=2.4:d=1.0,adelay=4900:all=1,volume=1.2[chug];
- [horn][sea][eng][drop][morse][s1][tail][sub][storm][metal][boom][thun][chug][stamp][th1][th2][th3][paper]amix=inputs=18:normalize=0,
+ [horn][sea][eng][drop][morse][s1][tail][sub][storm][metal][boom][thun][chug][stamp][th1][th2][th3][paper][pre][rise]amix=inputs=20:normalize=0,
  apad=whole_dur=$D,atrim=0:$D,equalizer=f=3000:t=o:w=1.4:g=-4,
  loudnorm=I=$SFX_I:TP=-3:LRA=15,volume='(1-0.4*clip((t-41.3)/0.6,0,1)*clip((47.2-t)/0.3,0,1))*(1-0.55*clip((t-43.8)/0.1,0,1)*clip((45.0-t)/0.2,0,1))':eval=frame,aresample=48000[o]" -map "[o]" -c:a pcm_s16le "$T/sfx.wav"
 

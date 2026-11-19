@@ -3,7 +3,7 @@
     <style>
       @font-face { font-family: Cormorant; src: url("assets/fonts/Cormorant.ttf"); font-weight: 300 700; }
       #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #d8cbb3; }
-      #chart-sheet { position: absolute; inset: 0; }
+      #chart-sheet { position: absolute; inset: 0; transform-origin: 50% 55%; }
       #chart-scan { position: absolute; left: -242.308px; top: -356.154px; width: 2953.846px; height: auto; }
       #chart-ink { position: absolute; inset: 0; width: 100%; height: 100%; color: #354748; }
       #chart-ink text { fill: currentColor; font-family: Cormorant, serif; font-size: 25px; font-weight: 600; }
@@ -11,11 +11,16 @@
       #chart-ink #chart-date { font-size: 24px; font-style: italic; font-weight: 500; opacity: 0; }
       #chart-veil { position: absolute; left: -100px; top: -260px; width: 1600px; height: 1000px;
         background: radial-gradient(ellipse 60% 60% at 33% 42%, rgba(238,231,214,1) 0%, rgba(238,231,214,.97) 55%, rgba(238,231,214,0) 100%); }
+      #chart-grazing-light {
+        position: absolute; inset: -18%; opacity: 0; pointer-events: none;
+        background: radial-gradient(ellipse 42% 66% at 20% 26%, #fff4cea6, #e3b57149 42%, transparent 87%);
+      }
       #chart-durban, #chart-cape-town, #chart-lastseen { opacity: 0; }
     </style>
     <div id="chart-sheet" data-layout-allow-overflow>
       <img id="chart-scan" src="assets/archive/admiralty-596.jpg" alt="Admiralty Chart No. 596, southern Africa, 1827" data-layout-allow-overflow data-layout-allow-overlap>
       <div id="chart-veil"></div>
+      <div id="chart-grazing-light" aria-hidden="true"></div>
       <svg id="chart-ink" viewBox="0 0 1248 702" role="img" aria-label="Intended route from Durban to Cape Town">
         <defs>
           <!-- Projected manually against the original engraved shoreline and port marks. -->
@@ -54,7 +59,10 @@
     <script>
       (() => {
         const timeline = gsap.timeline({ paused: true });
-        timeline.to("#chart-sheet", { scale: 1.021, duration: 9, ease: "none" }, 0);
+        const end = 10.2;
+        timeline.to("#chart-sheet", { scale: 1.10, x: -27, y: -20, duration: end, ease: "none" }, 0);
+        timeline.fromTo("#chart-grazing-light", { x: 95, opacity: .05 }, { x: 20, opacity: .36, duration: .54, ease: "sine.out" }, 0);
+        timeline.to("#chart-grazing-light", { x: -205, opacity: 0, duration: 1.48, ease: "sine.inOut" }, .54);
         timeline.to("#chart-date", { opacity: 0.82, duration: 0.85, ease: "power1.out" }, 0.36);
         timeline.to("#chart-durban", { opacity: 1, duration: 0.45, ease: "power1.out" }, 1.91);
         timeline.to("#chart-route-draw", {
@@ -65,7 +73,7 @@
         timeline.to("#chart-cape-town", { opacity: 1, duration: 0.55, ease: "power1.out" }, 6.5);
         timeline.to("#chart-track", { attr: { "stroke-dasharray": "172 1000" }, duration: 1.4, ease: "none" }, 2.48);
         timeline.to("#chart-lastseen", { opacity: 1, duration: .6, ease: "sine.out" }, 6.4);
-      window.__timelines = window.__timelines || {};
+        window.__timelines = window.__timelines || {};
         window.__timelines.chart = timeline;
       })();
     </script>

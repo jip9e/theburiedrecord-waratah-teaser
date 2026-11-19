@@ -13,9 +13,24 @@
       position: absolute; left: 1376px; top: 567px; width: 15px; height: 15px; border-radius: 50%;
       opacity: 0; background: #fff1d3; box-shadow: 0 0 22px 10px #ffd27acc;
     }
-    #night-camera { position: absolute; inset: 0; transform-origin: 1383px 574px; }
+    #night-focus, #night-camera { position: absolute; inset: 0; transform-origin: 1383px 574px; }
     #night-sky-wrap, #night-photo-wrap { position: absolute; inset: 0; }
-    #night-photo-wrap { transform-origin: 72% 52%; }
+    #night-photo-wrap { transform-origin: 1383px 574px; }
+    #night-stars { position: absolute; inset: 0; pointer-events: none; }
+    #night-stars div {
+      position: absolute; background: radial-gradient(circle, #e6eef5, #a4bbcc80 36%, transparent 72%);
+    }
+    #night-mist-far, #night-mist-near { position: absolute; pointer-events: none; }
+    #night-mist-far {
+      inset: 39% -19% 22%;
+      background: radial-gradient(ellipse 38% 22% at 53% 58%, #a4bbc32c, transparent 100%);
+    }
+    #night-mist-near {
+      inset: 52% -27% -6%;
+      background:
+        radial-gradient(ellipse 35% 18% at 39% 49%, #a7bdc241, transparent 100%),
+        radial-gradient(ellipse 41% 24% at 65% 68%, #819ba532, transparent 100%);
+    }
     #night-halo { position: absolute; left: 1183px; top: 374px; width: 400px; height: 400px; border-radius: 50%;
       opacity: 0; background: radial-gradient(circle, #fff3d6ff 0%, #ffd27a99 16%, #e7b45133 38%, #e7b45100 66%); }
     #night-morse { position: absolute; right: 150px; bottom: 140px; padding: 22px 30px; text-align: right;
@@ -30,13 +45,18 @@
   </style>
   <div data-hf-id="hf-i4oj" id="root" data-composition-id="night" data-width="1920" data-height="1080">
     <div data-hf-id="hf-h7e4" id="night-picture">
-      <div id="night-camera">
-        <div id="night-sky-wrap"><img data-color-grading="{&quot;preset&quot;:null,&quot;intensity&quot;:1,&quot;adjust&quot;:{&quot;exposure&quot;:-1.69,&quot;contrast&quot;:0,&quot;highlights&quot;:-0.4,&quot;shadows&quot;:0,&quot;whites&quot;:0,&quot;blacks&quot;:0,&quot;temperature&quot;:-0.31,&quot;tint&quot;:0,&quot;vibrance&quot;:0,&quot;saturation&quot;:-0.74},&quot;details&quot;:{&quot;vignette&quot;:0.28,&quot;vignetteMidpoint&quot;:0.5,&quot;vignetteRoundness&quot;:0,&quot;vignetteFeather&quot;:0.65,&quot;grain&quot;:0,&quot;grainSize&quot;:0.25,&quot;grainRoughness&quot;:0.5},&quot;effects&quot;:{&quot;blur&quot;:0,&quot;pixelate&quot;:0,&quot;chromaBleed&quot;:0,&quot;tapeDamage&quot;:0,&quot;tapeTracking&quot;:0,&quot;tapeNoise&quot;:1,&quot;tapeSpeed&quot;:0.5,&quot;filmArtifacts&quot;:0,&quot;halftone&quot;:0,&quot;halftoneSize&quot;:0,&quot;twoInkPrint&quot;:0,&quot;twoInkPrintSize&quot;:0,&quot;ascii&quot;:0,&quot;asciiSize&quot;:0.06578947368421052,&quot;asciiInvert&quot;:0,&quot;asciiStyle&quot;:0,&quot;asciiColor&quot;:1,&quot;asciiRotation&quot;:0,&quot;dither&quot;:0,&quot;ditherSize&quot;:0,&quot;bloom&quot;:0,&quot;bloomRadius&quot;:8,&quot;monoScreen&quot;:0,&quot;monoScreenSize&quot;:0,&quot;monoScreenAngle&quot;:0,&quot;monoScreenSpread&quot;:0,&quot;monoScreenShape&quot;:0,&quot;monoScreenInvert&quot;:0,&quot;scanlines&quot;:0,&quot;scanlineCount&quot;:0,&quot;scanlineSoftness&quot;:0,&quot;chromaticAberration&quot;:0,&quot;chromaticAngle&quot;:0,&quot;crtCurvature&quot;:0,&quot;digitalGlitch&quot;:0,&quot;digitalGlitchColorSplit&quot;:0,&quot;digitalGlitchLineTear&quot;:0,&quot;digitalGlitchPixelate&quot;:0,&quot;digitalGlitchBlockAmount&quot;:0,&quot;digitalGlitchBlockDisplacement&quot;:0,&quot;digitalGlitchBlockOpacity&quot;:0,&quot;digitalGlitchSpeed&quot;:0,&quot;engraving&quot;:0,&quot;engravingSpacing&quot;:0.4117647058823529,&quot;engravingMinThickness&quot;:0.2,&quot;engravingMaxThickness&quot;:0.4571428571428572,&quot;engravingAngle&quot;:0.25,&quot;engravingContrast&quot;:0.4666666666666667,&quot;engravingSharpness&quot;:0.59,&quot;engravingWave&quot;:0.2,&quot;engravingWaveFrequency&quot;:0.2222222222222222,&quot;crosshatch&quot;:0,&quot;crosshatchSpacing&quot;:0.28,&quot;crosshatchThickness&quot;:0.25,&quot;crosshatchAngle&quot;:0.25,&quot;crosshatchContrast&quot;:0.3333333333333333,&quot;crosshatchEdges&quot;:0.5,&quot;crosshatchLineWeight&quot;:0,&quot;crosshatchWave&quot;:0.33,&quot;crosshatchWaveFrequency&quot;:0.2222222222222222,&quot;kuwahara&quot;:0,&quot;kuwaharaRadius&quot;:0.14285714285714285,&quot;kuwaharaSharpness&quot;:0.3125,&quot;kuwaharaSaturation&quot;:0.5},&quot;lut&quot;:null,&quot;colorSpace&quot;:&quot;rec709&quot;}" data-hf-id="hf-8xu5" id="night-sky" src="assets/archive/painted-clouds.jpg" alt="" data-layout-allow-overflow=""></div>
-        <div id="night-photo-wrap"><img data-color-grading="{&quot;preset&quot;: null, &quot;intensity&quot;: 1, &quot;adjust&quot;: {&quot;exposure&quot;: -0.9, &quot;contrast&quot;: 0, &quot;highlights&quot;: -0.58, &quot;shadows&quot;: 0, &quot;whites&quot;: 0, &quot;blacks&quot;: -0.11, &quot;temperature&quot;: -0.24, &quot;tint&quot;: 0, &quot;vibrance&quot;: 0, &quot;saturation&quot;: -0.6}, &quot;details&quot;: {&quot;vignette&quot;: 0.35, &quot;vignetteMidpoint&quot;: 0.5, &quot;vignetteRoundness&quot;: 0, &quot;vignetteFeather&quot;: 0.65, &quot;grain&quot;: 0, &quot;grainSize&quot;: 0.25, &quot;grainRoughness&quot;: 0.5}, &quot;effects&quot;: {&quot;blur&quot;: 0, &quot;pixelate&quot;: 0, &quot;chromaBleed&quot;: 0, &quot;tapeDamage&quot;: 0, &quot;tapeTracking&quot;: 0, &quot;tapeNoise&quot;: 1, &quot;tapeSpeed&quot;: 0.5, &quot;filmArtifacts&quot;: 0, &quot;halftone&quot;: 0, &quot;halftoneSize&quot;: 0, &quot;twoInkPrint&quot;: 0, &quot;twoInkPrintSize&quot;: 0, &quot;ascii&quot;: 0, &quot;asciiSize&quot;: 0.06578947368421052, &quot;asciiInvert&quot;: 0, &quot;asciiStyle&quot;: 0, &quot;asciiColor&quot;: 1, &quot;asciiRotation&quot;: 0, &quot;dither&quot;: 0, &quot;ditherSize&quot;: 0, &quot;bloom&quot;: 0, &quot;bloomRadius&quot;: 8, &quot;monoScreen&quot;: 0, &quot;monoScreenSize&quot;: 0, &quot;monoScreenAngle&quot;: 0, &quot;monoScreenSpread&quot;: 0, &quot;monoScreenShape&quot;: 0, &quot;monoScreenInvert&quot;: 0, &quot;scanlines&quot;: 0, &quot;scanlineCount&quot;: 0, &quot;scanlineSoftness&quot;: 0, &quot;chromaticAberration&quot;: 0, &quot;chromaticAngle&quot;: 0, &quot;crtCurvature&quot;: 0, &quot;digitalGlitch&quot;: 0, &quot;digitalGlitchColorSplit&quot;: 0, &quot;digitalGlitchLineTear&quot;: 0, &quot;digitalGlitchPixelate&quot;: 0, &quot;digitalGlitchBlockAmount&quot;: 0, &quot;digitalGlitchBlockDisplacement&quot;: 0, &quot;digitalGlitchBlockOpacity&quot;: 0, &quot;digitalGlitchSpeed&quot;: 0, &quot;engraving&quot;: 0, &quot;engravingSpacing&quot;: 0.4117647058823529, &quot;engravingMinThickness&quot;: 0.2, &quot;engravingMaxThickness&quot;: 0.4571428571428572, &quot;engravingAngle&quot;: 0.25, &quot;engravingContrast&quot;: 0.4666666666666667, &quot;engravingSharpness&quot;: 0.59, &quot;engravingWave&quot;: 0.2, &quot;engravingWaveFrequency&quot;: 0.2222222222222222, &quot;crosshatch&quot;: 0, &quot;crosshatchSpacing&quot;: 0.28, &quot;crosshatchThickness&quot;: 0.25, &quot;crosshatchAngle&quot;: 0.25, &quot;crosshatchContrast&quot;: 0.3333333333333333, &quot;crosshatchEdges&quot;: 0.5, &quot;crosshatchLineWeight&quot;: 0, &quot;crosshatchWave&quot;: 0.33, &quot;crosshatchWaveFrequency&quot;: 0.2222222222222222, &quot;kuwahara&quot;: 0, &quot;kuwaharaRadius&quot;: 0.14285714285714285, &quot;kuwaharaSharpness&quot;: 0.3125, &quot;kuwaharaSaturation&quot;: 0.5}, &quot;lut&quot;: null, &quot;colorSpace&quot;: &quot;rec709&quot;}" id="night-photo" src="assets/archive/at_sea.jpg" alt="" data-layout-allow-overflow=""></div>
-        <div id="night-halo" aria-hidden="true"></div>
-        <div data-hf-id="hf-5ykv" id="night-lamp" aria-hidden="true"></div>
+      <div id="night-focus">
+        <div id="night-camera">
+          <div id="night-sky-wrap"><img data-color-grading="{&quot;preset&quot;:null,&quot;intensity&quot;:1,&quot;adjust&quot;:{&quot;exposure&quot;:-1.69,&quot;contrast&quot;:0,&quot;highlights&quot;:-0.4,&quot;shadows&quot;:0,&quot;whites&quot;:0,&quot;blacks&quot;:0,&quot;temperature&quot;:-0.31,&quot;tint&quot;:0,&quot;vibrance&quot;:0,&quot;saturation&quot;:-0.74},&quot;details&quot;:{&quot;vignette&quot;:0.28,&quot;vignetteMidpoint&quot;:0.5,&quot;vignetteRoundness&quot;:0,&quot;vignetteFeather&quot;:0.65,&quot;grain&quot;:0,&quot;grainSize&quot;:0.25,&quot;grainRoughness&quot;:0.5},&quot;effects&quot;:{&quot;blur&quot;:0,&quot;pixelate&quot;:0,&quot;chromaBleed&quot;:0,&quot;tapeDamage&quot;:0,&quot;tapeTracking&quot;:0,&quot;tapeNoise&quot;:1,&quot;tapeSpeed&quot;:0.5,&quot;filmArtifacts&quot;:0,&quot;halftone&quot;:0,&quot;halftoneSize&quot;:0,&quot;twoInkPrint&quot;:0,&quot;twoInkPrintSize&quot;:0,&quot;ascii&quot;:0,&quot;asciiSize&quot;:0.06578947368421052,&quot;asciiInvert&quot;:0,&quot;asciiStyle&quot;:0,&quot;asciiColor&quot;:1,&quot;asciiRotation&quot;:0,&quot;dither&quot;:0,&quot;ditherSize&quot;:0,&quot;bloom&quot;:0,&quot;bloomRadius&quot;:8,&quot;monoScreen&quot;:0,&quot;monoScreenSize&quot;:0,&quot;monoScreenAngle&quot;:0,&quot;monoScreenSpread&quot;:0,&quot;monoScreenShape&quot;:0,&quot;monoScreenInvert&quot;:0,&quot;scanlines&quot;:0,&quot;scanlineCount&quot;:0,&quot;scanlineSoftness&quot;:0,&quot;chromaticAberration&quot;:0,&quot;chromaticAngle&quot;:0,&quot;crtCurvature&quot;:0,&quot;digitalGlitch&quot;:0,&quot;digitalGlitchColorSplit&quot;:0,&quot;digitalGlitchLineTear&quot;:0,&quot;digitalGlitchPixelate&quot;:0,&quot;digitalGlitchBlockAmount&quot;:0,&quot;digitalGlitchBlockDisplacement&quot;:0,&quot;digitalGlitchBlockOpacity&quot;:0,&quot;digitalGlitchSpeed&quot;:0,&quot;engraving&quot;:0,&quot;engravingSpacing&quot;:0.4117647058823529,&quot;engravingMinThickness&quot;:0.2,&quot;engravingMaxThickness&quot;:0.4571428571428572,&quot;engravingAngle&quot;:0.25,&quot;engravingContrast&quot;:0.4666666666666667,&quot;engravingSharpness&quot;:0.59,&quot;engravingWave&quot;:0.2,&quot;engravingWaveFrequency&quot;:0.2222222222222222,&quot;crosshatch&quot;:0,&quot;crosshatchSpacing&quot;:0.28,&quot;crosshatchThickness&quot;:0.25,&quot;crosshatchAngle&quot;:0.25,&quot;crosshatchContrast&quot;:0.3333333333333333,&quot;crosshatchEdges&quot;:0.5,&quot;crosshatchLineWeight&quot;:0,&quot;crosshatchWave&quot;:0.33,&quot;crosshatchWaveFrequency&quot;:0.2222222222222222,&quot;kuwahara&quot;:0,&quot;kuwaharaRadius&quot;:0.14285714285714285,&quot;kuwaharaSharpness&quot;:0.3125,&quot;kuwaharaSaturation&quot;:0.5},&quot;lut&quot;:null,&quot;colorSpace&quot;:&quot;rec709&quot;}" data-hf-id="hf-8xu5" id="night-sky" src="assets/archive/painted-clouds.jpg" alt="" data-layout-allow-overflow=""></div>
+          <div id="night-photo-wrap"><img data-color-grading="{&quot;preset&quot;: null, &quot;intensity&quot;: 1, &quot;adjust&quot;: {&quot;exposure&quot;: -0.9, &quot;contrast&quot;: 0, &quot;highlights&quot;: -0.58, &quot;shadows&quot;: 0, &quot;whites&quot;: 0, &quot;blacks&quot;: -0.11, &quot;temperature&quot;: -0.24, &quot;tint&quot;: 0, &quot;vibrance&quot;: 0, &quot;saturation&quot;: -0.6}, &quot;details&quot;: {&quot;vignette&quot;: 0.35, &quot;vignetteMidpoint&quot;: 0.5, &quot;vignetteRoundness&quot;: 0, &quot;vignetteFeather&quot;: 0.65, &quot;grain&quot;: 0, &quot;grainSize&quot;: 0.25, &quot;grainRoughness&quot;: 0.5}, &quot;effects&quot;: {&quot;blur&quot;: 0, &quot;pixelate&quot;: 0, &quot;chromaBleed&quot;: 0, &quot;tapeDamage&quot;: 0, &quot;tapeTracking&quot;: 0, &quot;tapeNoise&quot;: 1, &quot;tapeSpeed&quot;: 0.5, &quot;filmArtifacts&quot;: 0, &quot;halftone&quot;: 0, &quot;halftoneSize&quot;: 0, &quot;twoInkPrint&quot;: 0, &quot;twoInkPrintSize&quot;: 0, &quot;ascii&quot;: 0, &quot;asciiSize&quot;: 0.06578947368421052, &quot;asciiInvert&quot;: 0, &quot;asciiStyle&quot;: 0, &quot;asciiColor&quot;: 1, &quot;asciiRotation&quot;: 0, &quot;dither&quot;: 0, &quot;ditherSize&quot;: 0, &quot;bloom&quot;: 0, &quot;bloomRadius&quot;: 8, &quot;monoScreen&quot;: 0, &quot;monoScreenSize&quot;: 0, &quot;monoScreenAngle&quot;: 0, &quot;monoScreenSpread&quot;: 0, &quot;monoScreenShape&quot;: 0, &quot;monoScreenInvert&quot;: 0, &quot;scanlines&quot;: 0, &quot;scanlineCount&quot;: 0, &quot;scanlineSoftness&quot;: 0, &quot;chromaticAberration&quot;: 0, &quot;chromaticAngle&quot;: 0, &quot;crtCurvature&quot;: 0, &quot;digitalGlitch&quot;: 0, &quot;digitalGlitchColorSplit&quot;: 0, &quot;digitalGlitchLineTear&quot;: 0, &quot;digitalGlitchPixelate&quot;: 0, &quot;digitalGlitchBlockAmount&quot;: 0, &quot;digitalGlitchBlockDisplacement&quot;: 0, &quot;digitalGlitchBlockOpacity&quot;: 0, &quot;digitalGlitchSpeed&quot;: 0, &quot;engraving&quot;: 0, &quot;engravingSpacing&quot;: 0.4117647058823529, &quot;engravingMinThickness&quot;: 0.2, &quot;engravingMaxThickness&quot;: 0.4571428571428572, &quot;engravingAngle&quot;: 0.25, &quot;engravingContrast&quot;: 0.4666666666666667, &quot;engravingSharpness&quot;: 0.59, &quot;engravingWave&quot;: 0.2, &quot;engravingWaveFrequency&quot;: 0.2222222222222222, &quot;crosshatch&quot;: 0, &quot;crosshatchSpacing&quot;: 0.28, &quot;crosshatchThickness&quot;: 0.25, &quot;crosshatchAngle&quot;: 0.25, &quot;crosshatchContrast&quot;: 0.3333333333333333, &quot;crosshatchEdges&quot;: 0.5, &quot;crosshatchLineWeight&quot;: 0, &quot;crosshatchWave&quot;: 0.33, &quot;crosshatchWaveFrequency&quot;: 0.2222222222222222, &quot;kuwahara&quot;: 0, &quot;kuwaharaRadius&quot;: 0.14285714285714285, &quot;kuwaharaSharpness&quot;: 0.3125, &quot;kuwaharaSaturation&quot;: 0.5}, &quot;lut&quot;: null, &quot;colorSpace&quot;: &quot;rec709&quot;}" id="night-photo" src="assets/archive/at_sea.jpg" alt="" data-layout-allow-overflow=""></div>
+          <div id="night-stars" aria-hidden="true"></div>
+          <div id="night-mist-far" aria-hidden="true"></div>
+          <div id="night-mist-near" aria-hidden="true"></div>
+          <div id="night-halo" aria-hidden="true"></div>
+          <div data-hf-id="hf-5ykv" id="night-lamp" aria-hidden="true"></div>
+        </div>
       </div>
-      </div>
+    </div>
     <div id="night-morse" aria-hidden="true">
       <p class="row" id="nm-r1"><span class="lbl">Clan MacIntyre</span><span class="L" id="r1l0"><b>W</b><i>·——</i></span><span class="L" id="r1l1"><b>H</b><i>····</i></span><span class="L" id="r1l2"><b>A</b><i>·—</i></span><span class="L" id="r1l3"><b>T</b><i>—</i></span><span class="gap"></span><span class="L" id="r1l5"><b>S</b><i>···</i></span><span class="L" id="r1l6"><b>H</b><i>····</i></span><span class="L" id="r1l7"><b>I</b><i>··</i></span><span class="L" id="r1l8"><b>P</b><i>·——·</i></span></p>
       <p class="row" id="nm-r2"><span class="lbl">Waratah · reply</span><span class="L" id="r2l0"><b>W</b><i>·——</i></span><span class="L" id="r2l1"><b>A</b><i>·—</i></span><span class="L" id="r2l2"><b>R</b><i>·—·</i></span><span class="L" id="r2l3"><b>A</b><i>·—</i></span><span class="L" id="r2l4"><b>T</b><i>—</i></span><span class="L" id="r2l5"><b>A</b><i>·—</i></span><span class="L" id="r2l6"><b>H</b><i>····</i></span></p>
@@ -45,6 +65,7 @@
   <script>
     (() => {
       const timeline = gsap.timeline({ paused: true });
+      const end = 11.26;
       timeline.set("#night-picture", { opacity: 1 }, 0);
       // Real Morse, generated by tools/morse.mjs: Clan MacIntyre asks WHAT SHIP, Waratah's lamp answers WARATAH.
       const MSG = [{"id": "r1", "lamp": false, "k": [[25.25, 25.3, 0], [25.35, 25.5, 0], [25.55, 25.7, 0], [25.85, 25.9, 1], [25.95, 26, 1], [26.05, 26.1, 1], [26.15, 26.2, 1], [26.35, 26.4, 2], [26.45, 26.6, 2], [26.75, 26.9, 3], [27.25, 27.3, 5], [27.35, 27.4, 5], [27.45, 27.5, 5], [27.65, 27.7, 6], [27.75, 27.8, 6], [27.85, 27.9, 6], [27.95, 28, 6], [28.15, 28.2, 7], [28.25, 28.3, 7], [28.45, 28.5, 8], [28.55, 28.7, 8], [28.75, 28.9, 8], [28.95, 29, 8]]}, {"id": "r2", "lamp": true, "k": [[29.25, 29.312, 0], [29.374, 29.56, 0], [29.622, 29.808, 0], [29.994, 30.056, 1], [30.118, 30.304, 1], [30.49, 30.552, 2], [30.614, 30.8, 2], [30.862, 30.924, 2], [31.11, 31.172, 3], [31.234, 31.42, 3], [31.606, 31.792, 4], [31.978, 32.04, 5], [32.102, 32.288, 5], [32.474, 32.536, 6], [32.598, 32.66, 6], [32.722, 32.784, 6], [32.846, 32.908, 6]]}];
@@ -58,11 +79,30 @@
       timeline.to("#nm-r1", { opacity: 1, duration: .3 }, 0);
       timeline.to("#nm-r2", { opacity: 1, duration: .4 }, 3.9);
       timeline.to("#night-morse", { opacity: 0, duration: .5 }, 9.3);
-      timeline.to("#night-sky-wrap", { x: 19, duration: 10, ease: "none" }, 0);
-      timeline.fromTo("#night-photo-wrap", { scale: 1 }, { scale: 1.06, duration: 10.06, ease: "none" }, 0);
-      // Punch in toward the lamp before her reply, then drift.
-      timeline.fromTo("#night-camera", { scale: 1, x: 0 }, { scale: 1.32, x: -120, duration: 1.1, ease: "power2.inOut" }, 3.6);
-      timeline.to("#night-camera", { scale: 1.4, x: -150, duration: 5.3, ease: "none" }, 4.7);
+      timeline.to("#night-sky-wrap", { x: 21, duration: end, ease: "none" }, 0);
+      timeline.to("#night-photo-wrap", { scale: 1.035, duration: end, ease: "none" }, 0);
+      timeline.to("#night-camera", { scale: 1.135, x: -55, duration: end, ease: "none" }, 0);
+      // The focus move rides on a separate, continuous camera drift.
+      timeline.to("#night-focus", { scale: 1.285, x: -76, duration: 1.1, ease: "sine.inOut" }, 3.6);
+      timeline.fromTo("#night-mist-far", { x: 24, opacity: .42 }, { x: -72, opacity: .58, duration: end, ease: "none" }, 0);
+      timeline.fromTo("#night-mist-near", { x: 90, opacity: .56 }, { x: -179, opacity: .39, duration: end, ease: "none" }, 0);
+
+      const stars = document.querySelector("#night-stars");
+      for (let i = 0; i < 24; i++) {
+        const star = document.createElement("div");
+        const size = i % 8 === 0 ? 4 : 2 + (i * 3 % 4) / 2;
+        star.style.left = `${3 + (i * 67 + i * i * 7) % 94}%`;
+        star.style.top = `${3 + (i * 19 + i * i * 11) % 31}%`;
+        star.style.width = star.style.height = `${size}px`;
+        star.style.opacity = .16 + (i % 5) * .035;
+        stars.appendChild(star);
+        timeline.to(star, { x: 12 - i % 5, duration: end, ease: "none" }, 0);
+        timeline.to(star, {
+          opacity: .36 + (i % 4) * .065, duration: .64 + (i % 5) * .17,
+          repeat: 1, yoyo: true, ease: "sine.inOut"
+        }, .5 + (i * 23 % 69) / 10);
+      }
+
       timeline.to("#night-picture", { opacity: .62, duration: 1.65, ease: "sine.inOut" }, 5.3);
       window.__timelines = window.__timelines || {};
       window.__timelines.night = timeline;

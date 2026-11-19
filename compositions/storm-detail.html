@@ -3,9 +3,16 @@
     @font-face { font-family: Cormorant; src: url("assets/fonts/Cormorant.ttf") format("truetype"); font-weight: 300 700; }
     @font-face { font-family: Inter; src: url("assets/fonts/Inter.ttf") format("truetype"); font-weight: 300 800; }
     #root { position: absolute; inset: 0; overflow: hidden; background: #0d0b09; }
-    #sd-cam { position: absolute; inset: 0; transform-origin: 30% 40%; }
+    #sd-plate, #sd-cam { position: absolute; inset: 0; }
+    #sd-cam { transform-origin: 30% 40%; }
     #sd-chart { position: absolute; left: -132px; top: -440px; width: 2304px; height: 1527px; }
-    #sd-shade { position: absolute; inset: 0; background: linear-gradient(180deg, #0d0b09b8 0%, #0d0b0999 45%, #0d0b09e6 100%); }
+    #sd-shade { position: absolute; inset: -75px -145px; background: linear-gradient(180deg, #0d0b09b8 0%, #0d0b0999 45%, #0d0b09e6 100%); }
+    #sd-haze {
+      position: absolute; inset: 18% -23% -4%; pointer-events: none;
+      background:
+        radial-gradient(ellipse 35% 25% at 47% 51%, #c1aa8b36, transparent 100%),
+        radial-gradient(ellipse 39% 19% at 68% 67%, #879a9a37, transparent 100%);
+    }
     #sd-svg { position: absolute; inset: 0; width: 1920px; height: 1080px; }
     #sd-title { position: absolute; right: 150px; top: 130px; margin: 0; text-align: right; color: #e9dfc9; opacity: 0;
       font: 600 64px/1.05 Cormorant, serif; letter-spacing: .05em; }
@@ -16,34 +23,37 @@
     #sd-ker { left: 1440px; top: 560px; }
   </style>
   <div id="root" data-composition-id="storm-detail" data-width="1920" data-height="1080">
-    <div id="sd-plate" class="clip" data-start="0" data-duration="4.15" data-layout-allow-overlap="">
+    <div id="sd-plate" class="clip" data-start="0" data-duration="5.35" data-layout-allow-overlap="">
       <div id="sd-cam" data-layout-allow-overflow="">
         <img id="sd-chart" src="assets/archive/admiralty-596.jpg" alt="">
         <div id="sd-shade"></div>
+        <div id="sd-haze" aria-hidden="true"></div>
+        <svg id="sd-svg" viewBox="0 0 1920 1080">
+          <circle id="sd-cape-dot" cx="300" cy="380" r="10" fill="#e9dfc9" opacity="0"/>
+          <path id="sd-track" d="M300 380 L520 440 L480 510 L760 540 L720 610 L1020 600 L990 660 L1300 630 L1420 610"
+            fill="none" stroke="#ff6a52" stroke-width="5" stroke-linejoin="round"/>
+          <path id="sd-arrow" d="M1404 592 L1440 610 L1404 628" fill="none" stroke="#ff6a52" stroke-width="5" opacity="0"/>
+        </svg>
+        <p class="sd-lab" id="sd-cape">CAPE TOWN</p>
+        <p class="sd-lab" id="sd-ker">KERGUELEN →</p>
       </div>
-      <svg id="sd-svg" viewBox="0 0 1920 1080">
-        <circle id="sd-cape-dot" cx="300" cy="380" r="10" fill="#e9dfc9" opacity="0"/>
-        <path id="sd-track" d="M300 380 L520 440 L480 510 L760 540 L720 610 L1020 600 L990 660 L1300 630 L1420 610"
-          fill="none" stroke="#ff6a52" stroke-width="5" stroke-linejoin="round"/>
-        <path id="sd-arrow" d="M1404 592 L1440 610 L1404 628" fill="none" stroke="#ff6a52" stroke-width="5" opacity="0"/>
-      </svg>
-      <p class="sd-lab" id="sd-cape">CAPE TOWN</p>
-      <p class="sd-lab" id="sd-ker">KERGUELEN →</p>
       <h2 id="sd-title">SS WAKEFIELD · 1910<span>NOTHING FOUND</span></h2>
     </div>
   </div>
   <script>
     (() => {
       const timeline = gsap.timeline({ paused: true });
+      const end = 5.35;
       const track = document.querySelector("#sd-track");
       const len = 1900;
-      timeline.fromTo("#sd-cam", { scale: 1.06 }, { scale: 1.0, duration: 4.15, ease: "sine.out" }, 0);
+      timeline.fromTo("#sd-cam", { x: 14, scale: 1.025 }, { x: -92, y: -8, scale: 1.13, duration: end, ease: "none" }, 0);
+      timeline.fromTo("#sd-haze", { x: 65, opacity: .43 }, { x: -149, opacity: .66, duration: end, ease: "none" }, 0);
       timeline.to("#sd-cape-dot", { opacity: 1, duration: .3 }, .1);
       timeline.to("#sd-cape", { opacity: 1, duration: .35 }, .15);
       timeline.fromTo(track, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 2.6, ease: "power1.inOut" }, .3);
       timeline.to("#sd-arrow", { opacity: 1, duration: .2 }, 2.85);
       timeline.to("#sd-ker", { opacity: 1, duration: .35 }, 2.8);
-      timeline.to("#sd-title", { opacity: 1, duration: .5, ease: "sine.out" }, .2);
+      timeline.fromTo("#sd-title", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .5, ease: "sine.out" }, .2);
       window.__timelines = window.__timelines || {};
       window.__timelines["storm-detail"] = timeline;
     })();

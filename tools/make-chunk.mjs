@@ -6,10 +6,14 @@ const hostRe = /<div id="([\w-]+)" class="clip"[^>]*?data-start="([\d.]+)" data-
 const all = [...html.matchAll(hostRe)].map(m => ({ id: m[1], start: +m[2], dur: +m[3], tag: m[0] }));
 const cardsHost = all.find(x => x.id === "cards");
 const scenes = all.filter(x => x.id !== "cards").sort((a, b) => a.start - b.start);
+// Every scene but the last renders TAIL extra seconds past its cut, so the stitch can crossfade into the next one.
+const TAIL = 1.2;
+scenes.forEach((x, i) => { x.tail = i < scenes.length - 1 ? TAIL : 0; });
 const arg = process.argv[2];
-if (arg === "--list") { console.log(JSON.stringify(scenes.map(({ id, start, dur }) => ({ id, start, dur })))); process.exit(0); }
-const s = scenes.find(x => x.id === arg);
-if (!s) { console.error("unknown scene " + arg); process.exit(1); }
+if (arg === "--list") { console.log(JSON.stringify(scenes.map(({ id, start, dur, tail }) => ({ id, start, dur, tail })))); process.exit(0); }
+const s0 = scenes.find(x => x.id === arg);
+if (!s0) { console.error("unknown scene " + arg); process.exit(1); }
+const s = { ...s0, dur: +(s0.dur + s0.tail).toFixed(3), tag: s0.tag.replace(/data-duration="[\d.]+"/, `data-duration="${+(s0.dur + s0.tail).toFixed(3)}"`) };
 const open = html.indexOf('<div id="main"'), close = html.indexOf("<script>", open);
 const body = `<div id="main" data-composition-id="main" data-start="0" data-duration="${s.dur}" data-width="1920" data-height="1080">\n  ` +
   s.tag.replace(/data-start="[\d.]+"/, 'data-start="0"') + "\n  " +

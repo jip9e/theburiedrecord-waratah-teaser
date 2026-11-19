@@ -2,22 +2,28 @@
   <style>
     @font-face { font-family: Cormorant; src: url("assets/fonts/Cormorant.ttf") format("truetype"); font-weight: 300 700; }
     @font-face { font-family: Inter; src: url("assets/fonts/Inter.ttf") format("truetype"); font-weight: 300 800; }
-    #title-bgwrap { position: absolute; inset: -60px -120px; opacity: 0; overflow: hidden; }
+    #title-bgwrap { position: absolute; inset: -60px -120px; opacity: .28; overflow: hidden; transform-origin: 59% 49%; }
     #title-bgwrap img { left: 0; top: 0; width: 2160px; height: 1200px; }
     #title-bg { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
+    #title-leak {
+      position: absolute; inset: -16%; opacity: 0; pointer-events: none;
+      background: radial-gradient(ellipse 49% 67% at 15% 26%, #ffdb9f9c, #d07c443a 48%, transparent 85%);
+    }
     #title-stack { position: relative; text-align: center; }
     #title-sub { margin: 26px 0 0; opacity: 0; color: rgba(233,223,201,.8); font: 500 28px/1.3 Inter, sans-serif; letter-spacing: .2em; }
     #title-none { margin: 30px 0 0; opacity: 0; color: #ffb4a4; text-shadow: 0 2px 10px #000, 0 0 3px #000; font: 600 30px/1.3 Inter, sans-serif; letter-spacing: .22em; }
-    #root { position: absolute; inset: 0; background: #000; display: grid; place-items: center; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; display: grid; place-items: center; }
     #waratah-title {
-      margin: 0; color: var(--title-ink); opacity: 0;
+      margin: 0; color: var(--title-ink); white-space: nowrap;
       font: 600 140px/1 Cormorant, serif; letter-spacing: .19em; text-indent: .19em;
     }
+    #waratah-title .title-letter { display: inline-block; opacity: 0; text-indent: 0; }
   </style>
   <div id="root" data-composition-id="title" data-width="1920" data-height="1080">
     <div id="title-bgwrap"><img id="title-bg" src="assets/archive/smoking_room.jpg" alt="" data-color-grading="{&quot;preset&quot;: null, &quot;intensity&quot;: 1, &quot;adjust&quot;: {&quot;exposure&quot;: -0.45, &quot;contrast&quot;: 0, &quot;highlights&quot;: -0.52, &quot;shadows&quot;: 0, &quot;whites&quot;: 0, &quot;blacks&quot;: -0.1, &quot;temperature&quot;: -0.24, &quot;tint&quot;: 0, &quot;vibrance&quot;: 0, &quot;saturation&quot;: -0.7}, &quot;details&quot;: {&quot;vignette&quot;: 0.4, &quot;vignetteMidpoint&quot;: 0.5, &quot;vignetteRoundness&quot;: 0, &quot;vignetteFeather&quot;: 0.65, &quot;grain&quot;: 0, &quot;grainSize&quot;: 0.25, &quot;grainRoughness&quot;: 0.5}, &quot;effects&quot;: {&quot;blur&quot;: 0, &quot;pixelate&quot;: 0, &quot;chromaBleed&quot;: 0, &quot;tapeDamage&quot;: 0, &quot;tapeTracking&quot;: 0, &quot;tapeNoise&quot;: 1, &quot;tapeSpeed&quot;: 0.5, &quot;filmArtifacts&quot;: 0, &quot;halftone&quot;: 0, &quot;halftoneSize&quot;: 0, &quot;twoInkPrint&quot;: 0, &quot;twoInkPrintSize&quot;: 0, &quot;ascii&quot;: 0, &quot;asciiSize&quot;: 0.06578947368421052, &quot;asciiInvert&quot;: 0, &quot;asciiStyle&quot;: 0, &quot;asciiColor&quot;: 1, &quot;asciiRotation&quot;: 0, &quot;dither&quot;: 0, &quot;ditherSize&quot;: 0, &quot;bloom&quot;: 0, &quot;bloomRadius&quot;: 8, &quot;monoScreen&quot;: 0, &quot;monoScreenSize&quot;: 0, &quot;monoScreenAngle&quot;: 0, &quot;monoScreenSpread&quot;: 0, &quot;monoScreenShape&quot;: 0, &quot;monoScreenInvert&quot;: 0, &quot;scanlines&quot;: 0, &quot;scanlineCount&quot;: 0, &quot;scanlineSoftness&quot;: 0, &quot;chromaticAberration&quot;: 0, &quot;chromaticAngle&quot;: 0, &quot;crtCurvature&quot;: 0, &quot;digitalGlitch&quot;: 0, &quot;digitalGlitchColorSplit&quot;: 0, &quot;digitalGlitchLineTear&quot;: 0, &quot;digitalGlitchPixelate&quot;: 0, &quot;digitalGlitchBlockAmount&quot;: 0, &quot;digitalGlitchBlockDisplacement&quot;: 0, &quot;digitalGlitchBlockOpacity&quot;: 0, &quot;digitalGlitchSpeed&quot;: 0, &quot;engraving&quot;: 0, &quot;engravingSpacing&quot;: 0.4117647058823529, &quot;engravingMinThickness&quot;: 0.2, &quot;engravingMaxThickness&quot;: 0.4571428571428572, &quot;engravingAngle&quot;: 0.25, &quot;engravingContrast&quot;: 0.4666666666666667, &quot;engravingSharpness&quot;: 0.59, &quot;engravingWave&quot;: 0.2, &quot;engravingWaveFrequency&quot;: 0.2222222222222222, &quot;crosshatch&quot;: 0, &quot;crosshatchSpacing&quot;: 0.28, &quot;crosshatchThickness&quot;: 0.25, &quot;crosshatchAngle&quot;: 0.25, &quot;crosshatchContrast&quot;: 0.3333333333333333, &quot;crosshatchEdges&quot;: 0.5, &quot;crosshatchLineWeight&quot;: 0, &quot;crosshatchWave&quot;: 0.33, &quot;crosshatchWaveFrequency&quot;: 0.2222222222222222, &quot;kuwahara&quot;: 0, &quot;kuwaharaRadius&quot;: 0.14285714285714285, &quot;kuwaharaSharpness&quot;: 0.3125, &quot;kuwaharaSaturation&quot;: 0.5}, &quot;lut&quot;: null, &quot;colorSpace&quot;: &quot;rec709&quot;}"></div>
+    <div id="title-leak" aria-hidden="true"></div>
     <div id="title-stack">
-      <h1 id="waratah-title" data-hold>THE WARATAH</h1>
+      <h1 id="waratah-title" data-hold aria-label="THE WARATAH"><span class="title-letter">T</span><span class="title-letter">H</span><span class="title-letter">E</span> <span class="title-letter">W</span><span class="title-letter">A</span><span class="title-letter">R</span><span class="title-letter">A</span><span class="title-letter">T</span><span class="title-letter">A</span><span class="title-letter">H</span></h1>
       <p id="title-sub">DURBAN → CAPE TOWN → LONDON · VANISHED JULY 1909</p>
       <p id="title-none">NO WRECKAGE · NO LIFEBOATS · NO BODIES</p>
     </div>
@@ -25,13 +31,16 @@
   <script>
     (() => {
       const timeline = gsap.timeline({ paused: true });
-      timeline.to("#waratah-title", { opacity: 1, duration: 1.3, ease: "sine.inOut" }, .12);
+      const end = 8.65;
+      timeline.to("#title-bgwrap", { scale: 1.14, x: -73, y: -10, duration: end, ease: "none" }, 0);
       timeline.to("#title-bgwrap", { opacity: .34, duration: 1.4, ease: "sine.inOut" }, 0);
-      timeline.fromTo("#title-bgwrap", { scale: 1 }, { scale: 1.07, duration: 7.45, ease: "none" }, 0);
-      timeline.to("#title-sub", { opacity: 1, duration: .8, ease: "sine.out" }, 1.0);
-      timeline.to("#title-none", { opacity: 1, duration: .6, ease: "sine.out" }, 3.0);
-      timeline.to(["#title-sub", "#title-none", "#title-bgwrap"], { opacity: 0, duration: .92, ease: "sine.inOut" }, 6.50);
-      timeline.to("#waratah-title", { opacity: 0, duration: .92, ease: "sine.inOut" }, 6.50);
+      timeline.fromTo("#title-leak", { x: 45, opacity: 0 }, { x: -20, opacity: .40, duration: .42, ease: "sine.out" }, .06);
+      timeline.to("#title-leak", { x: -210, opacity: 0, duration: 1.02, ease: "sine.inOut" }, .48);
+      timeline.fromTo("#waratah-title .title-letter", { x: 7, y: 23, opacity: 0 }, {
+        x: 0, y: 0, opacity: 1, duration: .88, stagger: .047, ease: "sine.out"
+      }, .12);
+      timeline.fromTo("#title-sub", { y: 13, opacity: 0 }, { y: 0, opacity: 1, duration: .8, ease: "sine.out" }, 1.0);
+      timeline.fromTo("#title-none", { y: 11, opacity: 0 }, { y: 0, opacity: 1, duration: .6, ease: "sine.out" }, 3.0);
       window.__timelines = window.__timelines || {};
       window.__timelines.title = timeline;
     })();

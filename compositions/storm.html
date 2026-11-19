@@ -1,30 +1,48 @@
 <template>
   <style>
     #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
-    #storm-impact, #storm-camera { position: absolute; inset: 0; }
-    #storm-camera { transform-origin: 53% 52%; }
+    #storm-impact, #storm-surge, #storm-camera, #storm-rain { position: absolute; inset: 0; }
+    #storm-surge, #storm-camera { transform-origin: 53% 52%; }
     #storm-painting {
       position: absolute; top: -60px; left: -44px; width: 2008px; height: 1200px;
       object-fit: cover; object-position: center 53%;
     }
     #storm-lightning {
-      position: absolute; inset: 0; opacity: 0;
+      position: absolute; inset: 0; opacity: 0; pointer-events: none;
       background: radial-gradient(ellipse at 21% 8%, #d0e0f1, #839bbd 31%, transparent 70%);
-      mix-blend-mode: screen;
+    }
+    #storm-spindrift {
+      position: absolute; inset: 44% -28% -19%; pointer-events: none;
+      background:
+        radial-gradient(ellipse 38% 31% at 36% 63%, #d0dce240, transparent 100%),
+        radial-gradient(ellipse 35% 22% at 68% 47%, #a0b5c043, transparent 100%);
+    }
+    #storm-rain { pointer-events: none; }
+    #storm-rain div { position: absolute; opacity: 0; }
+    #storm-rain div::before {
+      content: ""; position: absolute; inset: 0; transform: rotate(22deg);
+      background: linear-gradient(transparent, #b3c7d36e 38%, #dbe7ea 82%, transparent);
     }
   </style>
   <div data-hf-id="hf-293s" id="root" data-composition-id="storm" data-width="1920" data-height="1080">
     <div data-hf-id="hf-isg2" id="storm-impact" data-layout-allow-overflow="">
-      <div data-hf-id="hf-ef1s" id="storm-camera">
-        <img data-color-grading="{&quot;preset&quot;:null,&quot;intensity&quot;:1,&quot;adjust&quot;:{&quot;exposure&quot;:-0.15,&quot;contrast&quot;:0.09,&quot;highlights&quot;:-0.07,&quot;shadows&quot;:0,&quot;whites&quot;:0,&quot;blacks&quot;:0,&quot;temperature&quot;:-0.15,&quot;tint&quot;:0,&quot;vibrance&quot;:0,&quot;saturation&quot;:-0.18},&quot;details&quot;:{&quot;vignette&quot;:0.12,&quot;vignetteMidpoint&quot;:0.5,&quot;vignetteRoundness&quot;:0,&quot;vignetteFeather&quot;:0.65,&quot;grain&quot;:0,&quot;grainSize&quot;:0.25,&quot;grainRoughness&quot;:0.5},&quot;effects&quot;:{&quot;blur&quot;:0,&quot;pixelate&quot;:0,&quot;chromaBleed&quot;:0,&quot;tapeDamage&quot;:0,&quot;tapeTracking&quot;:0,&quot;tapeNoise&quot;:1,&quot;tapeSpeed&quot;:0.5,&quot;filmArtifacts&quot;:0,&quot;halftone&quot;:0,&quot;halftoneSize&quot;:0,&quot;twoInkPrint&quot;:0,&quot;twoInkPrintSize&quot;:0,&quot;ascii&quot;:0,&quot;asciiSize&quot;:0.06578947368421052,&quot;asciiInvert&quot;:0,&quot;asciiStyle&quot;:0,&quot;asciiColor&quot;:1,&quot;asciiRotation&quot;:0,&quot;dither&quot;:0,&quot;ditherSize&quot;:0,&quot;bloom&quot;:0,&quot;bloomRadius&quot;:8,&quot;monoScreen&quot;:0,&quot;monoScreenSize&quot;:0,&quot;monoScreenAngle&quot;:0,&quot;monoScreenSpread&quot;:0,&quot;monoScreenShape&quot;:0,&quot;monoScreenInvert&quot;:0,&quot;scanlines&quot;:0,&quot;scanlineCount&quot;:0,&quot;scanlineSoftness&quot;:0,&quot;chromaticAberration&quot;:0,&quot;chromaticAngle&quot;:0,&quot;crtCurvature&quot;:0,&quot;digitalGlitch&quot;:0,&quot;digitalGlitchColorSplit&quot;:0,&quot;digitalGlitchLineTear&quot;:0,&quot;digitalGlitchPixelate&quot;:0,&quot;digitalGlitchBlockAmount&quot;:0,&quot;digitalGlitchBlockDisplacement&quot;:0,&quot;digitalGlitchBlockOpacity&quot;:0,&quot;digitalGlitchSpeed&quot;:0,&quot;engraving&quot;:0,&quot;engravingSpacing&quot;:0.4117647058823529,&quot;engravingMinThickness&quot;:0.2,&quot;engravingMaxThickness&quot;:0.4571428571428572,&quot;engravingAngle&quot;:0.25,&quot;engravingContrast&quot;:0.4666666666666667,&quot;engravingSharpness&quot;:0.59,&quot;engravingWave&quot;:0.2,&quot;engravingWaveFrequency&quot;:0.2222222222222222,&quot;crosshatch&quot;:0,&quot;crosshatchSpacing&quot;:0.28,&quot;crosshatchThickness&quot;:0.25,&quot;crosshatchAngle&quot;:0.25,&quot;crosshatchContrast&quot;:0.3333333333333333,&quot;crosshatchEdges&quot;:0.5,&quot;crosshatchLineWeight&quot;:0,&quot;crosshatchWave&quot;:0.33,&quot;crosshatchWaveFrequency&quot;:0.2222222222222222,&quot;kuwahara&quot;:0,&quot;kuwaharaRadius&quot;:0.14285714285714285,&quot;kuwaharaSharpness&quot;:0.3125,&quot;kuwaharaSaturation&quot;:0.5},&quot;lut&quot;:null,&quot;colorSpace&quot;:&quot;rec709&quot;}" data-hf-id="hf-yda1" id="storm-painting" src="assets/archive/postcard.jpg" alt="Period painting of the Waratah at sea">
+      <div id="storm-surge">
+        <div data-hf-id="hf-ef1s" id="storm-camera">
+          <img data-color-grading="{&quot;preset&quot;:null,&quot;intensity&quot;:1,&quot;adjust&quot;:{&quot;exposure&quot;:-0.15,&quot;contrast&quot;:0.09,&quot;highlights&quot;:-0.07,&quot;shadows&quot;:0,&quot;whites&quot;:0,&quot;blacks&quot;:0,&quot;temperature&quot;:-0.15,&quot;tint&quot;:0,&quot;vibrance&quot;:0,&quot;saturation&quot;:-0.18},&quot;details&quot;:{&quot;vignette&quot;:0.12,&quot;vignetteMidpoint&quot;:0.5,&quot;vignetteRoundness&quot;:0,&quot;vignetteFeather&quot;:0.65,&quot;grain&quot;:0,&quot;grainSize&quot;:0.25,&quot;grainRoughness&quot;:0.5},&quot;effects&quot;:{&quot;blur&quot;:0,&quot;pixelate&quot;:0,&quot;chromaBleed&quot;:0,&quot;tapeDamage&quot;:0,&quot;tapeTracking&quot;:0,&quot;tapeNoise&quot;:1,&quot;tapeSpeed&quot;:0.5,&quot;filmArtifacts&quot;:0,&quot;halftone&quot;:0,&quot;halftoneSize&quot;:0,&quot;twoInkPrint&quot;:0,&quot;twoInkPrintSize&quot;:0,&quot;ascii&quot;:0,&quot;asciiSize&quot;:0.06578947368421052,&quot;asciiInvert&quot;:0,&quot;asciiStyle&quot;:0,&quot;asciiColor&quot;:1,&quot;asciiRotation&quot;:0,&quot;dither&quot;:0,&quot;ditherSize&quot;:0,&quot;bloom&quot;:0,&quot;bloomRadius&quot;:8,&quot;monoScreen&quot;:0,&quot;monoScreenSize&quot;:0,&quot;monoScreenAngle&quot;:0,&quot;monoScreenSpread&quot;:0,&quot;monoScreenShape&quot;:0,&quot;monoScreenInvert&quot;:0,&quot;scanlines&quot;:0,&quot;scanlineCount&quot;:0,&quot;scanlineSoftness&quot;:0,&quot;chromaticAberration&quot;:0,&quot;chromaticAngle&quot;:0,&quot;crtCurvature&quot;:0,&quot;digitalGlitch&quot;:0,&quot;digitalGlitchColorSplit&quot;:0,&quot;digitalGlitchLineTear&quot;:0,&quot;digitalGlitchPixelate&quot;:0,&quot;digitalGlitchBlockAmount&quot;:0,&quot;digitalGlitchBlockDisplacement&quot;:0,&quot;digitalGlitchBlockOpacity&quot;:0,&quot;digitalGlitchSpeed&quot;:0,&quot;engraving&quot;:0,&quot;engravingSpacing&quot;:0.4117647058823529,&quot;engravingMinThickness&quot;:0.2,&quot;engravingMaxThickness&quot;:0.4571428571428572,&quot;engravingAngle&quot;:0.25,&quot;engravingContrast&quot;:0.4666666666666667,&quot;engravingSharpness&quot;:0.59,&quot;engravingWave&quot;:0.2,&quot;engravingWaveFrequency&quot;:0.2222222222222222,&quot;crosshatch&quot;:0,&quot;crosshatchSpacing&quot;:0.28,&quot;crosshatchThickness&quot;:0.25,&quot;crosshatchAngle&quot;:0.25,&quot;crosshatchContrast&quot;:0.3333333333333333,&quot;crosshatchEdges&quot;:0.5,&quot;crosshatchLineWeight&quot;:0,&quot;crosshatchWave&quot;:0.33,&quot;crosshatchWaveFrequency&quot;:0.2222222222222222,&quot;kuwahara&quot;:0,&quot;kuwaharaRadius&quot;:0.14285714285714285,&quot;kuwaharaSharpness&quot;:0.3125,&quot;kuwaharaSaturation&quot;:0.5},&quot;lut&quot;:null,&quot;colorSpace&quot;:&quot;rec709&quot;}" data-hf-id="hf-yda1" id="storm-painting" src="assets/archive/postcard.jpg" alt="Period painting of the Waratah at sea">
+        </div>
       </div>
     </div>
+    <div id="storm-spindrift" aria-hidden="true"></div>
+    <div id="storm-rain" aria-hidden="true"></div>
     <div data-hf-id="hf-6n2c" id="storm-lightning" aria-hidden="true"></div>
   </div>
   <script>
     (() => {
       const timeline = gsap.timeline({ paused: true });
-      timeline.to("#storm-camera", { scale: 1.066, duration: 3.24, ease: "none" }, 0);
+      const end = 4.44;
+      timeline.fromTo("#storm-camera", { scale: 1.02 }, { scale: 1.145, x: -60, y: -10, duration: end, ease: "none" }, 0);
+      timeline.to("#storm-surge", { scale: 1.07, x: -22, duration: .76, ease: "power2.out" }, .06);
+      timeline.fromTo("#storm-spindrift", { x: 115, opacity: .43 }, { x: -217, opacity: .65, duration: end, ease: "none" }, 0);
       timeline.set("#storm-impact", { x: -15, y: 13, rotation: -.52 }, 0);
       timeline.to("#storm-impact", { x: 10, y: -10, rotation: .32, duration: .09, ease: "power1.out" }, 0);
       timeline.to("#storm-impact", { x: -5, y: 5, rotation: -.15, duration: .11 }, .09);
@@ -36,6 +54,36 @@
       timeline.to("#storm-lightning", { opacity: 0, duration: .23, ease: "power2.out" }, .57);
       timeline.to("#storm-impact", { x: 4, y: 3, rotation: .12, duration: .13, ease: "sine.out" }, 2.19);
       timeline.to("#storm-impact", { x: 0, y: 0, rotation: 0, duration: .52, ease: "sine.inOut" }, 2.32);
+      timeline.set("#storm-lightning", { opacity: .26 }, 2.19);
+      timeline.to("#storm-lightning", { opacity: .02, duration: .10, ease: "power2.out" }, 2.19);
+      timeline.set("#storm-lightning", { opacity: .12 }, 2.32);
+      timeline.to("#storm-lightning", { opacity: 0, duration: .26, ease: "power2.out" }, 2.32);
+
+      const rain = document.querySelector("#storm-rain");
+      for (let i = 0; i < 36; i++) {
+        const streak = document.createElement("div");
+        const near = i % 4 === 0;
+        const length = (near ? 72 : 35) + i * 13 % 37;
+        const travel = 270 + i * 29 % 130;
+        const opacity = near ? .44 : .18 + (i % 5) * .037;
+        const start = (i * 29 % 41) / 100;
+        const passes = 5 + i % 3;
+        streak.style.left = `${3 + (i * 59 + i * i * 11) % 109}%`;
+        streak.style.top = `${-26 + (i * 33 + i * i * 7) % 117}%`;
+        streak.style.width = near ? "2px" : "1px";
+        streak.style.height = `${length}px`;
+        rain.appendChild(streak);
+        timeline.to(streak, {
+          keyframes: {
+            "0%": { x: 0, y: 0, opacity: 0 },
+            "17%": { x: -.068 * travel, y: .17 * travel, opacity },
+            "78%": { x: -.312 * travel, y: .78 * travel, opacity: opacity * .85 },
+            "100%": { x: -.4 * travel, y: travel, opacity: 0 },
+            easeEach: "none"
+          },
+          duration: (end - start) / passes, repeat: passes - 1, ease: "none"
+        }, start);
+      }
       window.__timelines = window.__timelines || {};
       window.__timelines.storm = timeline;
     })();
